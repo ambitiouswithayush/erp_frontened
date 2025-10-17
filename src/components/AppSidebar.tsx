@@ -95,7 +95,7 @@ const superAdminMenuItems = [
     title: "Template",
     icon: FileText,
     subItems: [
-      { title: "SMS Templates", url: "/template/sms" },
+      { title: "SMS Templates", url: "/admin/sms" },
       { title: "Email Templates", url: "/template/email" },
     ],
   },
@@ -260,57 +260,212 @@ const superAdminMenuItems = [
 // Teacher Portal Menu
 const teacherMenuItems = [
   { title: "Dashboard", url: "/dashboard/staff", icon: LayoutDashboard },
-  { title: "My Attendance", url: "/teacher-portal/attendance", icon: UserCheck },
-  { title: "Academic Calendar", url: "/teacher-portal/calendar", icon: CalendarDays },
   {
-    title: "Manage Students",
-    icon: Users,
+    title: "Administrator",
+    icon: Settings,
     subItems: [
-      { title: "Student List", url: "/teacher-portal/students/list" },
-      { title: "Student Attendance", url: "/teacher-portal/students/attendance" },
-      { title: "Student Performance", url: "/teacher-portal/students/performance" },
+      { title: "Academic Year", url: "/teacher/admin/academic-year" },
     ],
   },
   {
-    title: "Classes & Lectures",
+    title: "Human Resource",
+    icon: Briefcase,
+    subItems: [
+      { title: "Manage Designation", url: "/teacher/hr/designation" },
+      { title: "Manage Employee", url: "/teacher/hr/employee" },
+    ],
+  },
+  {
+    title: "Teacher",
+    icon: GraduationCap,
+    subItems: [
+      { title: "Department", url: "/teacher/department" },
+      { title: "Manage Teacher", url: "/teacher/manage-teacher" },
+      { title: "Class Lecture", url: "/teacher/class-lecture" },
+      { title: "Rating", url: "/teacher/rating" },
+    ],
+  },
+  {
+    title: "Academic",
     icon: BookOpen,
     subItems: [
-      { title: "My Classes", url: "/teacher-portal/classes" },
-      { title: "Timetable", url: "/teacher-portal/timetable" },
-      { title: "Live Classes", url: "/teacher-portal/live-classes" },
-    ],
-  },
-  {
-    title: "Assignments",
-    icon: ClipboardList,
-    subItems: [
-      { title: "Create Assignment", url: "/teacher-portal/assignments/create" },
-      { title: "Submissions", url: "/teacher-portal/assignments/submissions" },
-      { title: "Grade Assignments", url: "/teacher-portal/assignments/grade" },
-    ],
-  },
-  {
-    title: "Exam Management",
-    icon: TestTube,
-    subItems: [
-      { title: "Exam Schedule", url: "/teacher-portal/exams/schedule" },
-      { title: "Enter Marks", url: "/teacher-portal/exams/marks" },
-      { title: "Result Analysis", url: "/teacher-portal/exams/analysis" },
+      { title: "Class", url: "/teacher/academic/class" },
+      { title: "Section", url: "/teacher/academic/section" },
+      { title: "Subject", url: "/teacher/academic/subject" },
+      { title: "Syllabus", url: "/teacher/academic/syllabus" },
+      { title: "Material", url: "/teacher/academic/material" },
+      { title: "Live Class", url: "/teacher/academic/live-class" },
+      { title: "Assignment", url: "/teacher/academic/assignment" },
+      { title: "Submission", url: "/teacher/academic/submission" },
     ],
   },
   {
     title: "Lesson Plan",
-    icon: BookCheck,
+    icon: ClipboardList,
     subItems: [
-      { title: "My Lesson Plans", url: "/teacher-portal/lesson-plan/my-plans" },
-      { title: "Create Lesson", url: "/teacher-portal/lesson-plan/create" },
-      { title: "Lesson Progress", url: "/teacher-portal/lesson-plan/progress" },
+      { title: "Lesson", url: "/teacher/lesson-plan/lesson" },
+      { title: "Topic", url: "/teacher/lesson-plan/topic" },
+      { title: "Lesson Timeline", url: "/teacher/lesson-plan/timeline" },
+      { title: "Lesson Status", url: "/teacher/lesson-plan/status" },
+      { title: "Lesson Plan", url: "/teacher/lesson-plan/plan" },
     ],
   },
-  { title: "My Payroll", url: "/teacher-portal/payroll", icon: DollarSign },
-  { title: "Leave Management", url: "/teacher-portal/leaves", icon: PlaneTakeoff },
-  { title: "Messages", url: "/teacher-portal/messages", icon: MessageSquare },
-  { title: "Profile", url: "/profile", icon: User },
+  { title: "Class Routine", url: "/teacher/class-routine", icon: Clock },
+  {
+    title: "Manage Student",
+    icon: Users,
+    subItems: [
+      { title: "Student Type", url: "/teacher/manage-student/type" },
+      { title: "Student List", url: "/teacher/manage-student/list" },
+      { title: "Student Activity", url: "/teacher/manage-student/activity" },
+    ],
+  },
+  {
+    title: "Attendance",
+    icon: UserCheck,
+    subItems: [
+      { title: "Student Attendance", url: "/teacher/attendance/student" },
+    ],
+  },
+  {
+    title: "Online Exam",
+    icon: TestTube,
+    subItems: [
+      { title: "Instruction", url: "/teacher/online-exam/instruction" },
+      { title: "Question Bank", url: "/teacher/online-exam/question-bank" },
+      { title: "Online Exam", url: "/teacher/online-exam/exam" },
+      { title: "Exam Result", url: "/teacher/online-exam/result" },
+    ],
+  },
+  {
+    title: "Manage Exam",
+    icon: BookMarked,
+    subItems: [
+      { title: "Exam Grade", url: "/teacher/exam/grade" },
+      { title: "Exam Term", url: "/teacher/exam/term" },
+      { title: "Schedule", url: "/teacher/exam/schedule" },
+      { title: "Suggestion", url: "/teacher/exam/suggestion" },
+      { title: "Attendance", url: "/teacher/exam/attendance" },
+    ],
+  },
+  {
+    title: "Exam Mark",
+    icon: Award,
+    subItems: [
+      { title: "Manage Mark", url: "/teacher/exam-mark/manage" },
+      { title: "Exam final result", url: "/teacher/exam-mark/final-result" },
+      { title: "Merit List", url: "/teacher/exam-mark/merit-list" },
+      { title: "Mark Sheet", url: "/teacher/exam-mark/mark-sheet" },
+      { title: "Result Card", url: "/teacher/exam-mark/result-card" },
+    ],
+  },
+  {
+    title: "Inventory",
+    icon: Package,
+    subItems: [
+      { title: "Supplier", url: "/teacher/inventory/supplier" },
+      { title: "Warehouse", url: "/teacher/inventory/warehouse" },
+      { title: "Category", url: "/teacher/inventory/category" },
+      { title: "Product", url: "/teacher/inventory/product" },
+      { title: "Purchase", url: "/teacher/inventory/purchase" },
+      { title: "Sale", url: "/teacher/inventory/sale" },
+      { title: "Issue", url: "/teacher/inventory/issue" },
+    ],
+  },
+  {
+    title: "Asset Management",
+    icon: Building2,
+    subItems: [
+      { title: "Vendor", url: "/teacher/asset/vendor" },
+      { title: "Store", url: "/teacher/asset/store" },
+      { title: "Category", url: "/teacher/asset/category" },
+      { title: "Item", url: "/teacher/asset/item" },
+      { title: "Purchase", url: "/teacher/asset/purchase" },
+      { title: "Issue", url: "/teacher/asset/issue" },
+    ],
+  },
+  {
+    title: "Library",
+    icon: BookMarked,
+    subItems: [
+      { title: "Book", url: "/teacher/library/book" },
+      { title: "Library Member", url: "/teacher/library/member" },
+      { title: "Issue & Return", url: "/teacher/library/issue-return" },
+      { title: "E-Book", url: "/teacher/library/e-book" },
+    ],
+  },
+  {
+    title: "Transport",
+    icon: Bus,
+    subItems: [
+      { title: "Vehicle", url: "/teacher/transport/vehicle" },
+      { title: "Transport Route", url: "/teacher/transport/route" },
+    ],
+  },
+  {
+    title: "Hostel",
+    icon: HomeIcon,
+    subItems: [
+      { title: "Manage Hostel", url: "/teacher/hostel/manage" },
+      { title: "Manage Room", url: "/teacher/hostel/room" },
+    ],
+  },
+  { title: "Message", url: "/teacher/message", icon: MessageSquare },
+  {
+    title: "Announcement",
+    icon: Megaphone,
+    subItems: [
+      { title: "Notice", url: "/teacher/announcement/notice" },
+      { title: "News", url: "/teacher/announcement/news" },
+      { title: "Holiday", url: "/teacher/announcement/holiday" },
+    ],
+  },
+  {
+    title: "Scholarship",
+    icon: Trophy,
+    subItems: [
+      { title: "Candidate", url: "/teacher/scholarship/candidate" },
+      { title: "Donar", url: "/teacher/scholarship/donar" },
+      { title: "Scholarship", url: "/teacher/scholarship/scholarship" },
+    ],
+  },
+  { title: "Event", url: "/teacher/event", icon: Calendar },
+  {
+    title: "Media Gallery",
+    icon: Image,
+    subItems: [
+      { title: "Gallery", url: "/teacher/media-gallery/gallery" },
+      { title: "Gallery Image", url: "/teacher/media-gallery/image" },
+    ],
+  },
+  {
+    title: "Manage Frontend",
+    icon: Monitor,
+    subItems: [
+      { title: "Frontend Page", url: "/teacher/manage-frontend/page" },
+      { title: "Slider", url: "/teacher/manage-frontend/slider" },
+      { title: "About School", url: "/teacher/manage-frontend/about" },
+    ],
+  },
+  {
+    title: "Miscellaneous",
+    icon: MoreHorizontal,
+    subItems: [
+      { title: "Manage Award", url: "/teacher/miscellaneous/award" },
+      { title: "Manage Todo", url: "/teacher/miscellaneous/todo" },
+      { title: "FAQ", url: "/teacher/miscellaneous/faq" },
+    ],
+  },
+  {
+    title: "Profile",
+    icon: User,
+    subItems: [
+      { title: "My Profile", url: "/teacher/profile/my-profile" },
+      { title: "Reset Password", url: "/teacher/profile/reset-password" },
+      { title: "Complain", url: "/teacher/profile/complain" },
+      { title: "Leave Application", url: "/teacher/profile/leave" },
+    ],
+  },
 ];
 
 // Admin Portal Menu
@@ -439,7 +594,7 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const { user } = useAuth();
   const location = useLocation();
-  const [openMenus, setOpenMenus] = useState<string[]>(["Administrator"]);
+  const [openMenus, setOpenMenus] = useState<string[]>([]);
 
   // Get menu items based on user role
   const getMenuItems = () => {
@@ -461,7 +616,7 @@ export function AppSidebar() {
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) =>
-      prev.includes(title) ? prev.filter((m) => m !== title) : [...prev, title]
+      prev.includes(title) ? [] : [title]
     );
   };
 

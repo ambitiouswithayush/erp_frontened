@@ -5,10 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { LogOut } from "lucide-react";
+import { LogOut, Bell, MessageSquare, User } from "lucide-react";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -18,6 +19,14 @@ import Theme from "./pages/Theme";
 import Language from "./pages/Language";
 import ComingSoon from "./pages/ComingSoon";
 import NotFound from "./pages/NotFound";
+import AcademicYear from "./pages/teacher/AcademicYear";
+import ManageDesignation from "./pages/teacher/ManageDesignation";
+import ManageEmployee from "./pages/teacher/ManageEmployee";
+import ManageDepartment from "./pages/teacher/ManageDepartment";
+import GeneralSettings from "./pages/GeneralSettings";
+import ManageSchools from "./pages/ManageSchools";
+import ManageSMSTemplate from "./pages/ManageSMSTemplate";
+import ManageEmailTemplate from "./pages/ManageEmailTemplate";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +48,20 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger className="text-[#f0f0f0]" />
             <h1 className="text-lg font-semibold text-[#f0f0f0]">EduManage Pro</h1>
             <div className="ml-auto flex items-center gap-3">
+              <Avatar className="h-8 w-8">
+                <AvatarImage src="/placeholder.svg" alt="Teacher" />
+                <AvatarFallback className="bg-[#61D02E] text-white">T</AvatarFallback>
+              </Avatar>
               <span className="text-sm text-[#f0f0f0] capitalize">{user}</span>
+              <Button variant="ghost" size="sm" className="text-[#f0f0f0] hover:bg-gray-700">
+                <Bell className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="text-[#f0f0f0] hover:bg-gray-700">
+                <MessageSquare className="h-4 w-4" />
+              </Button>
+              <Button variant="ghost" size="sm" className="text-[#f0f0f0] hover:bg-gray-700">
+                <User className="h-4 w-4" />
+              </Button>
               <Button variant="outline" size="sm" onClick={handleLogout} className="bg-gray-700 border-gray-500 text-[#f0f0f0] hover:bg-gray-600">
                 <LogOut className="h-4 w-4 mr-2" />
                 Logout
@@ -65,7 +87,7 @@ const App = () => (
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navigate to="/login" replace />} />
-            
+
             {/* Dashboard Routes */}
             <Route path="/dashboard/superadmin" element={
               <ProtectedRoute allowedRoles={["superadmin"]}>
@@ -87,7 +109,7 @@ const App = () => (
                 <AppLayout><StudentDashboard /></AppLayout>
               </ProtectedRoute>
             } />
-            
+
             <Route path="/theme" element={
               <ProtectedRoute>
                 <AppLayout><Theme /></AppLayout>
@@ -98,17 +120,17 @@ const App = () => (
                 <AppLayout><Language /></AppLayout>
               </ProtectedRoute>
             } />
-            
+
             {/* Administrator Routes */}
             <Route path="/admin/general" element={
               <ProtectedRoute>
-                <AppLayout><ComingSoon title="General Settings" /></AppLayout>
+                <AppLayout><GeneralSettings /></AppLayout>
               </ProtectedRoute>
             } />
-            <Route path="/admin/schools" element={<ProtectedRoute><AppLayout><ComingSoon title="Manage Schools" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/schools" element={<ProtectedRoute><AppLayout><ManageSchools /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/payment" element={<ProtectedRoute><AppLayout><ComingSoon title="Payment Settings" /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ComingSoon title="SMS Settings" /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/email" element={<ProtectedRoute><AppLayout><ComingSoon title="Email Settings" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSTemplate /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/email" element={<ProtectedRoute><AppLayout><ManageEmailTemplate /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/academic-year" element={<ProtectedRoute><AppLayout><ComingSoon title="Academic Year" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/user-roles" element={<ProtectedRoute><AppLayout><ComingSoon title="User Role (ACL)" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/permissions" element={<ProtectedRoute><AppLayout><ComingSoon title="Roles Permissions" /></AppLayout></ProtectedRoute>} />
@@ -121,6 +143,28 @@ const App = () => (
             <Route path="/admin/feedbacks" element={<ProtectedRoute><AppLayout><ComingSoon title="Manage Feedbacks" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/backup" element={<ProtectedRoute><AppLayout><ComingSoon title="Backup Database" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/opening-hours" element={<ProtectedRoute><AppLayout><ComingSoon title="Opening Hours" /></AppLayout></ProtectedRoute>} />
+
+            {/* Teacher Portal Routes */}
+            <Route path="/teacher/admin/academic-year" element={
+              <ProtectedRoute allowedRoles={["staff"]}>
+                <AppLayout><AcademicYear /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/teacher/hr/designation" element={
+              <ProtectedRoute allowedRoles={["staff"]}>
+                <AppLayout><ManageDesignation /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/teacher/hr/employee" element={
+              <ProtectedRoute allowedRoles={["staff"]}>
+                <AppLayout><ManageEmployee /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/teacher/department" element={
+              <ProtectedRoute allowedRoles={["staff"]}>
+                <AppLayout><ManageDepartment /></AppLayout>
+              </ProtectedRoute>
+            } />
 
             {/* Other Routes - All Coming Soon */}
             <Route path="/template/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Template Management" /></AppLayout></ProtectedRoute>} />
