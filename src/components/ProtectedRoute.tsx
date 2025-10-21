@@ -14,6 +14,11 @@ export function ProtectedRoute({ children, allowedRoles }: ProtectedRouteProps) 
     return <Navigate to="/login" replace />;
   }
 
+  // Superadmin has access to all routes
+  if (user === "superadmin") {
+    return <>{children}</>;
+  }
+
   if (allowedRoles && user && !allowedRoles.includes(user)) {
     return <Navigate to={`/dashboard/${user}`} replace />;
   }

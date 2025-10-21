@@ -18,6 +18,8 @@ export default function ManageVisitorInfo() {
   const [meetUserType, setMeetUserType] = useState("");
   const [toMeet, setToMeet] = useState("");
   const [visitorPurpose, setVisitorPurpose] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
   const [note, setNote] = useState("");
 
   // Sample data for the table
@@ -28,7 +30,7 @@ export default function ManageVisitorInfo() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log("Form submitted:", { schoolName, name, phone, meetUserType, toMeet, visitorPurpose, note });
+    console.log("Form submitted:", { schoolName, name, phone, meetUserType, toMeet, visitorPurpose, checkIn, checkOut, note });
     // Reset form
     setSchoolName("");
     setName("");
@@ -36,6 +38,8 @@ export default function ManageVisitorInfo() {
     setMeetUserType("");
     setToMeet("");
     setVisitorPurpose("");
+    setCheckIn("");
+    setCheckOut("");
     setNote("");
   };
 
@@ -370,6 +374,36 @@ export default function ManageVisitorInfo() {
                         <SelectItem value="interview">Interview</SelectItem>
                       </SelectContent>
                     </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="checkIn" className="block text-sm font-medium mb-2 text-right">
+                      Check In
+                    </Label>
+                  </div>
+                  <div>
+                    <Input
+                      id="checkIn"
+                      type="datetime-local"
+                      value={checkIn}
+                      onChange={(e) => setCheckIn(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="checkOut" className="block text-sm font-medium mb-2 text-right">
+                      Check Out
+                    </Label>
+                  </div>
+                  <div>
+                    <Input
+                      id="checkOut"
+                      type="datetime-local"
+                      value={checkOut}
+                      onChange={(e) => setCheckOut(e.target.value)}
+                      className="w-full"
+                    />
                   </div>
 
                   <div>
