@@ -99,5 +99,9 @@ export default {
       },
     },
   },
+<<<<<<< HEAD
   plugins: [import("tailwindcss-animate")],
+=======
+  plugins: [require("tailwindcss-animate")],
+>>>>>>> origin/main
 } satisfies Config;

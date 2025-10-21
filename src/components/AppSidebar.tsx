@@ -96,7 +96,11 @@ const superAdminMenuItems = [
     icon: FileText,
     subItems: [
       { title: "SMS Templates", url: "/admin/sms" },
+<<<<<<< HEAD
       { title: "Email Templates", url: "/admin/email" },
+=======
+      { title: "Email Templates", url: "/template/email" },
+>>>>>>> origin/main
     ],
   },
   {
@@ -104,7 +108,10 @@ const superAdminMenuItems = [
     icon: UserCog,
     subItems: [
       { title: "Visitor Purpose", url: "/front-office/visitor-purpose" },
+<<<<<<< HEAD
       { title: "Visitor Info", url: "/front-office/visitor-info" },
+=======
+>>>>>>> origin/main
       { title: "Call Logs", url: "/front-office/call-logs" },
       { title: "Postal Dispatch", url: "/front-office/postal-dispatch" },
       { title: "Postal Receive", url: "/front-office/postal-receive" },
@@ -114,8 +121,13 @@ const superAdminMenuItems = [
     title: "Human Resource",
     icon: Briefcase,
     subItems: [
+<<<<<<< HEAD
       { title: "Manage Designation", url: "/teacher/hr/designation" },
       { title: "Manage Employee", url: "/teacher/hr/employee" },
+=======
+      { title: "Manage Destination", url: "/hr/destination" },
+      { title: "Manage Employee", url: "/hr/employee" },
+>>>>>>> origin/main
     ],
   },
   {
@@ -595,7 +607,11 @@ export function AppSidebar() {
   const { state } = useSidebar();
   const { user } = useAuth();
   const location = useLocation();
+<<<<<<< HEAD
   const [openMenus, setOpenMenus] = useState<string[]>(["Administrator"]);
+=======
+  const [openMenus, setOpenMenus] = useState<string[]>([]);
+>>>>>>> origin/main
 
   // Get menu items based on user role
   const getMenuItems = () => {
@@ -617,7 +633,11 @@ export function AppSidebar() {
 
   const toggleMenu = (title: string) => {
     setOpenMenus((prev) =>
+<<<<<<< HEAD
       prev.includes(title) ? prev.filter((item) => item !== title) : [...prev, title]
+=======
+      prev.includes(title) ? [] : [title]
+>>>>>>> origin/main
     );
   };
 
@@ -630,7 +650,11 @@ export function AppSidebar() {
   const isCollapsed = state === "collapsed";
 
   return (
+<<<<<<< HEAD
     <Sidebar className="w-64" collapsible="none">
+=======
+    <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
+>>>>>>> origin/main
       <SidebarContent className="bg-[linear-gradient(to_bottom,#4B365B,#2A2234)]">
         <div className="px-2 py-4 border-b border-gray-600">
           {!isCollapsed && (

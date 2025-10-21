@@ -23,25 +23,10 @@ import AcademicYear from "./pages/teacher/AcademicYear";
 import ManageDesignation from "./pages/teacher/ManageDesignation";
 import ManageEmployee from "./pages/teacher/ManageEmployee";
 import ManageDepartment from "./pages/teacher/ManageDepartment";
-import GeneralSetting from "./pages/superadmin/GeneralSetting";
-import ManageSchools from "./pages/superadmin/ManageSchools";
-import ManageSMSTemplate from "./pages/superadmin/ManageSMSTemplate";
-import ManageEmailTemplate from "./pages/superadmin/ManageEmailTemplate";
-import ManageVisitorPurpose from "./pages/superadmin/ManageVisitorPurpose";
-import ManageVisitorInfo from "./pages/superadmin/ManageVisitorInfo";
-import ManageCallLog from "./pages/superadmin/ManageCallLog";
-import ManagePostalDispatch from "./pages/superadmin/ManagePostalDispatch";
-import ManagePostalReceive from "./pages/superadmin/ManagePostalReceive";
-import ManageOpeningHour from "./pages/superadmin/ManageOpeningHour";
-import DatabaseBackup from "./pages/superadmin/DatabaseBackup";
-import ManageFeedback from "./pages/superadmin/ManageFeedback";
-import ActivityLog from "./pages/superadmin/ActivityLog";
-import ManageUserCredential from "./pages/superadmin/ManageUserCredential";
-import ResetUsername from "./pages/superadmin/ResetUsername";
-import DashboardLayout from "./components/DashboardLayout";
-import ResetPasswordPage from "./pages/superadmin/ResetPasswordPage";
-import ManagePaymentSettingPage from "./pages/superadmin/ManagePaymentSettingPage";
-import ManageSMSSettingsPage from "./pages/superadmin/ManageSMSSettingsPage";
+import GeneralSettings from "./pages/GeneralSettings";
+import ManageSchools from "./pages/ManageSchools";
+import ManageSMSTemplate from "./pages/ManageSMSTemplate";
+import ManageEmailTemplate from "./pages/ManageEmailTemplate";
 
 const queryClient = new QueryClient();
 
@@ -139,25 +124,25 @@ const App = () => (
             {/* Administrator Routes */}
             <Route path="/admin/general" element={
               <ProtectedRoute>
-                <AppLayout><GeneralSetting /></AppLayout>
+                <AppLayout><GeneralSettings /></AppLayout>
               </ProtectedRoute>
             } />
             <Route path="/admin/schools" element={<ProtectedRoute><AppLayout><ManageSchools /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/payment" element={<ProtectedRoute><AppLayout><ManagePaymentSettingPage /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSSettingsPage /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/payment" element={<ProtectedRoute><AppLayout><ComingSoon title="Payment Settings" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSTemplate /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/email" element={<ProtectedRoute><AppLayout><ManageEmailTemplate /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/academic-year" element={<ProtectedRoute><AppLayout><ComingSoon title="Academic Year" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/user-roles" element={<ProtectedRoute><AppLayout><ComingSoon title="User Role (ACL)" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/permissions" element={<ProtectedRoute><AppLayout><ComingSoon title="Roles Permissions" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/super-admin" element={<ProtectedRoute><AppLayout><ComingSoon title="Manage Super Admin" /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/users" element={<ProtectedRoute><AppLayout><ComingSoon title="Manage User" /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/reset-password" element={<ProtectedRoute><DashboardLayout title="Reset User Password" icon={<Settings className="h-6 w-6" />}><ResetPasswordPage /></DashboardLayout></ProtectedRoute>} />
-            <Route path="/admin/reset-username" element={<ProtectedRoute><AppLayout><ResetUsername /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/credentials" element={<ProtectedRoute><AppLayout><ManageUserCredential /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/activity-logs" element={<ProtectedRoute><AppLayout><ActivityLog /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/feedbacks" element={<ProtectedRoute><AppLayout><ManageFeedback /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/backup" element={<ProtectedRoute><AppLayout><DatabaseBackup /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/opening-hours" element={<ProtectedRoute><AppLayout><ManageOpeningHour /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/reset-password" element={<ProtectedRoute><AppLayout><ComingSoon title="Reset User Password" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/reset-username" element={<ProtectedRoute><AppLayout><ComingSoon title="Reset Username" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/credentials" element={<ProtectedRoute><AppLayout><ComingSoon title="User Credentials" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/activity-logs" element={<ProtectedRoute><AppLayout><ComingSoon title="Activity Logs" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/feedbacks" element={<ProtectedRoute><AppLayout><ComingSoon title="Manage Feedbacks" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/backup" element={<ProtectedRoute><AppLayout><ComingSoon title="Backup Database" /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/opening-hours" element={<ProtectedRoute><AppLayout><ComingSoon title="Opening Hours" /></AppLayout></ProtectedRoute>} />
 
             {/* Teacher Portal Routes */}
             <Route path="/teacher/admin/academic-year" element={
@@ -166,12 +151,12 @@ const App = () => (
               </ProtectedRoute>
             } />
             <Route path="/teacher/hr/designation" element={
-              <ProtectedRoute allowedRoles={["staff", "superadmin"]}>
+              <ProtectedRoute allowedRoles={["staff"]}>
                 <AppLayout><ManageDesignation /></AppLayout>
               </ProtectedRoute>
             } />
             <Route path="/teacher/hr/employee" element={
-              <ProtectedRoute allowedRoles={["staff", "superadmin"]}>
+              <ProtectedRoute allowedRoles={["staff"]}>
                 <AppLayout><ManageEmployee /></AppLayout>
               </ProtectedRoute>
             } />
@@ -183,11 +168,6 @@ const App = () => (
 
             {/* Other Routes - All Coming Soon */}
             <Route path="/template/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Template Management" /></AppLayout></ProtectedRoute>} />
-            <Route path="/front-office/visitor-purpose" element={<ProtectedRoute><AppLayout><ManageVisitorPurpose /></AppLayout></ProtectedRoute>} />
-            <Route path="/front-office/visitor-info" element={<ProtectedRoute><AppLayout><ManageVisitorInfo /></AppLayout></ProtectedRoute>} />
-            <Route path="/front-office/call-logs" element={<ProtectedRoute><AppLayout><ManageCallLog /></AppLayout></ProtectedRoute>} />
-            <Route path="/front-office/postal-dispatch" element={<ProtectedRoute><AppLayout><ManagePostalDispatch /></AppLayout></ProtectedRoute>} />
-            <Route path="/front-office/postal-receive" element={<ProtectedRoute><AppLayout><ManagePostalReceive /></AppLayout></ProtectedRoute>} />
             <Route path="/front-office/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Front Office" /></AppLayout></ProtectedRoute>} />
             <Route path="/hr/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Human Resource" /></AppLayout></ProtectedRoute>} />
             <Route path="/teacher/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Teacher Management" /></AppLayout></ProtectedRoute>} />
