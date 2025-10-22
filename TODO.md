@@ -1,10 +1,7 @@
-# TODO: Implement Add View for Manage SMS Template
+# TODO: Push Frontend Code to Friend's Repository
 
-- [x] Add necessary imports (Textarea, Label)
-- [x] Add state variables (activeTab, form fields)
-- [x] Update sub-navigation buttons to handle tab switching with proper styling
-- [x] Implement conditional rendering for Add view
-- [x] Create the form layout with two-column grid
-- [x] Add form fields: School Name, Receiver Type, Title, Template
-- [x] Add helper text for Template
-- [x] Add form actions footer with Cancel and Submit buttons
+- [x] Clone the friend's repository (https://github.com/HarshitkGoyal/Student-Management-System.git) into a temporary directory
+- [x] Copy the current frontend code from the current directory to the 'Frontend' subdirectory in the cloned repo
+- [x] Add and commit the changes in the cloned repo
+- [x] Create a new branch named 'blackboxai/frontend-update'
+- [x] Push the new branch to the repository

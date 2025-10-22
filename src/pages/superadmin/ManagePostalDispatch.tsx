@@ -1,86 +1,42 @@
 import { useState } from "react";
-import { ChevronUp, User, List, SquarePlus, Copy, FileText, Download, Search, Edit, Trash2, ChevronLeft, ChevronRight, Filter, Menu } from "lucide-react";
+import { ChevronUp, Home, List, SquarePlus, Copy, FileText, Download, Search, Eye, Edit, Trash2, ChevronLeft, ChevronRight, Filter, Menu, User, Paperclip } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-interface Designation {
-  sl: number;
-  school: string;
-  designation: string;
-  note: string;
-}
-
-export default function ManageDesignation() {
-  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'edit'>('list');
+export default function ManagePostalDispatch() {
+  const [activeTab, setActiveTab] = useState<'list' | 'add'>('list');
   const [selectedRows, setSelectedRows] = useState("15");
   const [schoolName, setSchoolName] = useState("");
-  const [designation, setDesignation] = useState("");
+  const [toTitle, setToTitle] = useState("");
+  const [reference, setReference] = useState("");
+  const [address, setAddress] = useState("");
+  const [fromTitle, setFromTitle] = useState("");
+  const [dispatchDate, setDispatchDate] = useState("");
   const [note, setNote] = useState("");
-  const [editingId, setEditingId] = useState<number | null>(null);
 
-  // State for designations
-  const [designations, setDesignations] = useState<Designation[]>([
-    {
-      sl: 1,
-      school: "Future Ratan Pre School",
-      designation: "Teacher",
-      note: "Primary teacher"
-    }
-  ]);
+  // Sample data for the table
+  const postalDispatches = [
+    // No data for now, will show "No data available in table"
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (editingId !== null) {
-      // Update existing designation
-      setDesignations(prev => prev.map(item =>
-        item.sl === editingId
-          ? { ...item, school: schoolName, designation, note }
-          : item
-      ));
-    } else {
-      // Add new designation
-      const newDesignation: Designation = {
-        sl: designations.length + 1,
-        school: schoolName,
-        designation,
-        note
-      };
-      setDesignations(prev => [...prev, newDesignation]);
-    }
-
+    // Handle form submission
+    console.log("Form submitted:", { schoolName, toTitle, reference, address, fromTitle, dispatchDate, note });
     // Reset form
     setSchoolName("");
-    setDesignation("");
+    setToTitle("");
+    setReference("");
+    setAddress("");
+    setFromTitle("");
+    setDispatchDate("");
     setNote("");
-    setEditingId(null);
-    setActiveTab('list');
-  };
-
-  const handleEdit = (item: Designation) => {
-    setSchoolName(item.school);
-    setDesignation(item.designation);
-    setNote(item.note);
-    setEditingId(item.sl);
-    setActiveTab('add');
-  };
-
-  const handleDelete = (id: number) => {
-    setDesignations(prev => prev.filter(item => item.sl !== id));
-  };
-
-  const handleCancel = () => {
-    setSchoolName("");
-    setDesignation("");
-    setNote("");
-    setEditingId(null);
-    setActiveTab('list');
   };
 
   return (
@@ -151,8 +107,8 @@ export default function ManageDesignation() {
       <Card className="max-w-6xl mx-auto my-8 shadow-lg bg-white">
         <CardHeader className="bg-purple-800 text-white flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Manage Designation
+            <Home className="h-5 w-5" />
+            Manage Postal Dispatch
           </CardTitle>
           <ChevronUp className="h-5 w-5" />
         </CardHeader>
@@ -162,9 +118,15 @@ export default function ManageDesignation() {
             <div className="flex items-center flex-wrap">
               <span className="text-sm font-medium mr-4">Quick Link:</span>
               <div className="flex items-center space-x-2 text-blue-600 text-sm flex-wrap">
-                <span className="font-semibold">Manage Designation</span>
+                <a href="#" className="hover:underline">Visitor Purpose</a>
                 <span>|</span>
-                <a href="#" className="hover:underline">Manage Employee</a>
+                <a href="#" className="hover:underline">Visitor Info</a>
+                <span>|</span>
+                <a href="#" className="hover:underline">Call Log</a>
+                <span>|</span>
+                <span className="font-semibold">Postal Dispatch</span>
+                <span>|</span>
+                <a href="#" className="hover:underline">Postal Receive</a>
               </div>
             </div>
           </div>
@@ -235,34 +197,33 @@ export default function ManageDesignation() {
                   <TableHeader>
                     <TableRow className="border-b bg-gray-50">
                       <TableHead className="w-12 border-r border-gray-200">#SL</TableHead>
-                      <TableHead className="border-r border-gray-200">School Name <ChevronUp className="inline h-4 w-4" /></TableHead>
-                      <TableHead className="border-r border-gray-200">Designation <Filter className="inline h-4 w-4" /></TableHead>
-                      <TableHead className="border-r border-gray-200">Note <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">School <ChevronUp className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">To Title <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">Reference <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">From Title <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">Dispatch Date <Filter className="inline h-4 w-4" /></TableHead>
                       <TableHead>Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {designations.length > 0 ? (
-                      designations.map((item) => (
+                    {postalDispatches.length > 0 ? (
+                      postalDispatches.map((item) => (
                         <TableRow key={item.sl} className="border-b">
                           <TableCell className="border-r border-gray-200">{item.sl}</TableCell>
                           <TableCell className="border-r border-gray-200">{item.school}</TableCell>
-                          <TableCell className="border-r border-gray-200">{item.designation}</TableCell>
-                          <TableCell className="border-r border-gray-200">{item.note}</TableCell>
+                          <TableCell className="border-r border-gray-200">{item.toTitle}</TableCell>
+                          <TableCell className="border-r border-gray-200">{item.reference}</TableCell>
+                          <TableCell className="border-r border-gray-200">{item.fromTitle}</TableCell>
+                          <TableCell className="border-r border-gray-200">{item.dispatchDate}</TableCell>
                           <TableCell>
                             <div className="flex gap-2">
-                              <Button
-                                size="sm"
-                                className="bg-blue-600 text-white hover:bg-blue-700"
-                                onClick={() => handleEdit(item)}
-                              >
+                              <Button size="sm" variant="outline" className="text-blue-600">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button size="sm" variant="outline" className="text-blue-600">
                                 <Edit className="h-4 w-4" />
                               </Button>
-                              <Button
-                                size="sm"
-                                className="bg-red-600 text-white hover:bg-red-700"
-                                onClick={() => handleDelete(item.sl)}
-                              >
+                              <Button size="sm" variant="outline" className="text-red-600">
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </div>
@@ -271,7 +232,7 @@ export default function ManageDesignation() {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                        <TableCell colSpan={7} className="text-center py-8 text-gray-500">
                           No data available in table
                         </TableCell>
                       </TableRow>
@@ -283,7 +244,7 @@ export default function ManageDesignation() {
               {/* Table Footer / Pagination */}
               <div className="px-6 py-4 bg-white flex items-center justify-between border-t flex-wrap">
                 <span className="text-sm text-gray-600">
-                  Showing 1 to 1 of 1 entries
+                  Showing 0 to 0 of 0 entries
                 </span>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" disabled>
@@ -328,15 +289,67 @@ export default function ManageDesignation() {
                     </Select>
                   </div>
                   <div>
-                    <Label htmlFor="designation" className="block text-sm font-medium mb-2 text-right">
-                      Designation <span className="text-red-500">*</span>
+                    <Label htmlFor="toTitle" className="block text-sm font-medium mb-2 text-right">
+                      To Title <span className="text-red-500">*</span>
                     </Label>
                     <Input
-                      id="designation"
+                      id="toTitle"
                       type="text"
-                      placeholder="Designation"
-                      value={designation}
-                      onChange={(e) => setDesignation(e.target.value)}
+                      placeholder="To Title"
+                      value={toTitle}
+                      onChange={(e) => setToTitle(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="reference" className="block text-sm font-medium mb-2 text-right">
+                      Reference
+                    </Label>
+                    <Input
+                      id="reference"
+                      type="text"
+                      placeholder="Reference"
+                      value={reference}
+                      onChange={(e) => setReference(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="address" className="block text-sm font-medium mb-2 text-right">
+                      Address <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="address"
+                      type="text"
+                      placeholder="Address"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="fromTitle" className="block text-sm font-medium mb-2 text-right">
+                      From Title <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="fromTitle"
+                      type="text"
+                      placeholder="From Title"
+                      value={fromTitle}
+                      onChange={(e) => setFromTitle(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="dispatchDate" className="block text-sm font-medium mb-2 text-right">
+                      Dispatch Date <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                      id="dispatchDate"
+                      type="text"
+                      placeholder="Dispatch Date"
+                      value={dispatchDate}
+                      onChange={(e) => setDispatchDate(e.target.value)}
                       className="w-full"
                     />
                   </div>
@@ -355,13 +368,25 @@ export default function ManageDesignation() {
                       rows={4}
                     />
                   </div>
+                  <div>
+                    <Label className="block text-sm font-medium mb-2 text-right">
+                      Attachment
+                    </Label>
+                    <div className="flex items-center gap-2">
+                      <Button variant="outline" className="flex items-center gap-2">
+                        <Paperclip className="h-4 w-4" />
+                        Upload
+                      </Button>
+                      <span className="text-sm text-blue-600">Please select a valid file format.</span>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex gap-4">
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
-                    {editingId !== null ? 'Update' : 'Save'}
-                  </Button>
-                  <Button type="button" variant="outline" onClick={handleCancel}>
+                <div className="flex justify-center gap-4">
+                  <Button type="button" variant="outline" onClick={() => setActiveTab('list')}>
                     Cancel
+                  </Button>
+                  <Button type="submit" className="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800">
+                    Submit
                   </Button>
                 </div>
               </form>

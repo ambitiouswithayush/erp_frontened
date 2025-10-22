@@ -96,7 +96,7 @@ const superAdminMenuItems = [
     icon: FileText,
     subItems: [
       { title: "SMS Templates", url: "/admin/sms" },
-      { title: "Email Templates", url: "/template/email" },
+      { title: "Email Templates", url: "/admin/email" },
     ],
   },
   {
@@ -104,7 +104,7 @@ const superAdminMenuItems = [
     icon: UserCog,
     subItems: [
       { title: "Visitor Purpose", url: "/front-office/visitor-purpose" },
-      { title: "Call Logs", url: "/front-office/call-logs" },
+      { title: "Call Logs", url: "/front-office/call-log" },
       { title: "Postal Dispatch", url: "/front-office/postal-dispatch" },
       { title: "Postal Receive", url: "/front-office/postal-receive" },
     ],
@@ -113,8 +113,8 @@ const superAdminMenuItems = [
     title: "Human Resource",
     icon: Briefcase,
     subItems: [
-      { title: "Manage Destination", url: "/hr/destination" },
-      { title: "Manage Employee", url: "/hr/employee" },
+      { title: "Manage Designation", url: "/teacher/hr/designation" },
+      { title: "Manage Employee", url: "/teacher/hr/employee" },
     ],
   },
   {
@@ -122,7 +122,7 @@ const superAdminMenuItems = [
     icon: GraduationCap,
     subItems: [
       { title: "Department", url: "/teacher/department" },
-      { title: "Manage Teacher", url: "/teacher/manage" },
+      { title: "Manage Teacher", url: "/teacher/manage-teacher" },
       { title: "Class Lecture", url: "/teacher/class-lecture" },
       { title: "Rating", url: "/teacher/rating" },
     ],
@@ -304,10 +304,10 @@ const teacherMenuItems = [
     icon: ClipboardList,
     subItems: [
       { title: "Lesson", url: "/teacher/lesson-plan/lesson" },
-      { title: "Topic", url: "/teacher/lesson-plan/topic" },
-      { title: "Lesson Timeline", url: "/teacher/lesson-plan/timeline" },
-      { title: "Lesson Status", url: "/teacher/lesson-plan/status" },
-      { title: "Lesson Plan", url: "/teacher/lesson-plan/plan" },
+      { title: "Topic", url: "/lesson-plan/topic" },
+      { title: "Lesson Timeline", url: "/lesson-plan/timeline" },
+      { title: "Lesson Status", url: "/lesson-plan/status" },
+      { title: "Lesson Plan", url: "/lesson-plan/plan" },
     ],
   },
   { title: "Class Routine", url: "/teacher/class-routine", icon: Clock },

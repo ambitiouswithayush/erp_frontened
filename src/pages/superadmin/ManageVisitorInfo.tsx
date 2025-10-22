@@ -1,86 +1,46 @@
 import { useState } from "react";
-import { ChevronUp, User, List, SquarePlus, Copy, FileText, Download, Search, Edit, Trash2, ChevronLeft, ChevronRight, Filter, Menu } from "lucide-react";
+import { ChevronUp, Home, List, SquarePlus, Copy, FileText, Download, Search, Eye, Edit, Trash2, ChevronLeft, ChevronRight, Filter, Menu, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
-interface Designation {
-  sl: number;
-  school: string;
-  designation: string;
-  note: string;
-}
-
-export default function ManageDesignation() {
-  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'edit'>('list');
+export default function ManageVisitorInfo() {
+  const [activeTab, setActiveTab] = useState<'list' | 'add'>('list');
   const [selectedRows, setSelectedRows] = useState("15");
   const [schoolName, setSchoolName] = useState("");
-  const [designation, setDesignation] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [meetUserType, setMeetUserType] = useState("");
+  const [toMeet, setToMeet] = useState("");
+  const [visitorPurpose, setVisitorPurpose] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
   const [note, setNote] = useState("");
-  const [editingId, setEditingId] = useState<number | null>(null);
 
-  // State for designations
-  const [designations, setDesignations] = useState<Designation[]>([
-    {
-      sl: 1,
-      school: "Future Ratan Pre School",
-      designation: "Teacher",
-      note: "Primary teacher"
-    }
-  ]);
+  // Sample data for the table
+  const visitors = [
+    // Empty for now, will show "No data available"
+  ];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (editingId !== null) {
-      // Update existing designation
-      setDesignations(prev => prev.map(item =>
-        item.sl === editingId
-          ? { ...item, school: schoolName, designation, note }
-          : item
-      ));
-    } else {
-      // Add new designation
-      const newDesignation: Designation = {
-        sl: designations.length + 1,
-        school: schoolName,
-        designation,
-        note
-      };
-      setDesignations(prev => [...prev, newDesignation]);
-    }
-
+    // Handle form submission
+    console.log("Form submitted:", { schoolName, name, phone, meetUserType, toMeet, visitorPurpose, checkIn, checkOut, note });
     // Reset form
     setSchoolName("");
-    setDesignation("");
+    setName("");
+    setPhone("");
+    setMeetUserType("");
+    setToMeet("");
+    setVisitorPurpose("");
+    setCheckIn("");
+    setCheckOut("");
     setNote("");
-    setEditingId(null);
-    setActiveTab('list');
-  };
-
-  const handleEdit = (item: Designation) => {
-    setSchoolName(item.school);
-    setDesignation(item.designation);
-    setNote(item.note);
-    setEditingId(item.sl);
-    setActiveTab('add');
-  };
-
-  const handleDelete = (id: number) => {
-    setDesignations(prev => prev.filter(item => item.sl !== id));
-  };
-
-  const handleCancel = () => {
-    setSchoolName("");
-    setDesignation("");
-    setNote("");
-    setEditingId(null);
-    setActiveTab('list');
   };
 
   return (
@@ -151,8 +111,8 @@ export default function ManageDesignation() {
       <Card className="max-w-6xl mx-auto my-8 shadow-lg bg-white">
         <CardHeader className="bg-purple-800 text-white flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
-            <User className="h-5 w-5" />
-            Manage Designation
+            <Home className="h-5 w-5" />
+            Manage Visitor
           </CardTitle>
           <ChevronUp className="h-5 w-5" />
         </CardHeader>
@@ -162,9 +122,15 @@ export default function ManageDesignation() {
             <div className="flex items-center flex-wrap">
               <span className="text-sm font-medium mr-4">Quick Link:</span>
               <div className="flex items-center space-x-2 text-blue-600 text-sm flex-wrap">
-                <span className="font-semibold">Manage Designation</span>
+                <a href="#" className="hover:underline">Visitor Purpose</a>
                 <span>|</span>
-                <a href="#" className="hover:underline">Manage Employee</a>
+                <span className="font-semibold">Visitor Info</span>
+                <span>|</span>
+                <a href="#" className="hover:underline">Call Log</a>
+                <span>|</span>
+                <a href="#" className="hover:underline">Postal Dispatch</a>
+                <span>|</span>
+                <a href="#" className="hover:underline">Postal Receive</a>
               </div>
             </div>
           </div>
@@ -192,7 +158,7 @@ export default function ManageDesignation() {
           {/* List View */}
           {activeTab === 'list' && (
             <>
-              {/* Table Controls Section */}
+              {/* Table Controls */}
               <div className="px-6 py-4 bg-white flex items-center justify-between flex-wrap">
                 <div className="flex items-center gap-2 flex-wrap">
                   <Button variant="outline" size="sm" className="bg-gray-100 text-gray-600">
@@ -216,7 +182,7 @@ export default function ManageDesignation() {
                   </Select>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Label className="text-sm">Search:</Label>
+                  <span className="text-sm">Search:</span>
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <Input placeholder="Search..." className="pl-10 w-48" />
@@ -235,34 +201,35 @@ export default function ManageDesignation() {
                   <TableHeader>
                     <TableRow className="border-b bg-gray-50">
                       <TableHead className="w-12 border-r border-gray-200">#SL</TableHead>
-                      <TableHead className="border-r border-gray-200">School Name <ChevronUp className="inline h-4 w-4" /></TableHead>
-                      <TableHead className="border-r border-gray-200">Designation <Filter className="inline h-4 w-4" /></TableHead>
-                      <TableHead className="border-r border-gray-200">Note <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">School <ChevronUp className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">Name <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">Phone <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">To Meet <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">Check In <Filter className="inline h-4 w-4" /></TableHead>
+                      <TableHead className="border-r border-gray-200">Check Out <Filter className="inline h-4 w-4" /></TableHead>
                       <TableHead>Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {designations.length > 0 ? (
-                      designations.map((item) => (
-                        <TableRow key={item.sl} className="border-b">
-                          <TableCell className="border-r border-gray-200">{item.sl}</TableCell>
-                          <TableCell className="border-r border-gray-200">{item.school}</TableCell>
-                          <TableCell className="border-r border-gray-200">{item.designation}</TableCell>
-                          <TableCell className="border-r border-gray-200">{item.note}</TableCell>
+                    {visitors.length > 0 ? (
+                      visitors.map((visitor) => (
+                        <TableRow key={visitor.sl} className="border-b">
+                          <TableCell className="border-r border-gray-200">{visitor.sl}</TableCell>
+                          <TableCell className="border-r border-gray-200">{visitor.school}</TableCell>
+                          <TableCell className="border-r border-gray-200">{visitor.name}</TableCell>
+                          <TableCell className="border-r border-gray-200">{visitor.phone}</TableCell>
+                          <TableCell className="border-r border-gray-200">{visitor.toMeet}</TableCell>
+                          <TableCell className="border-r border-gray-200">{visitor.checkIn}</TableCell>
+                          <TableCell className="border-r border-gray-200">{visitor.checkOut}</TableCell>
                           <TableCell>
                             <div className="flex gap-2">
-                              <Button
-                                size="sm"
-                                className="bg-blue-600 text-white hover:bg-blue-700"
-                                onClick={() => handleEdit(item)}
-                              >
+                              <Button size="sm" variant="outline" className="text-blue-600">
+                                <Eye className="h-4 w-4" />
+                              </Button>
+                              <Button size="sm" variant="outline" className="text-blue-600">
                                 <Edit className="h-4 w-4" />
                               </Button>
-                              <Button
-                                size="sm"
-                                className="bg-red-600 text-white hover:bg-red-700"
-                                onClick={() => handleDelete(item.sl)}
-                              >
+                              <Button size="sm" variant="outline" className="text-red-600">
                                 <Trash2 className="h-4 w-4" />
                               </Button>
                             </div>
@@ -271,7 +238,7 @@ export default function ManageDesignation() {
                       ))
                     ) : (
                       <TableRow>
-                        <TableCell colSpan={5} className="text-center py-8 text-gray-500">
+                        <TableCell colSpan={8} className="text-center py-8 text-gray-500">
                           No data available in table
                         </TableCell>
                       </TableRow>
@@ -283,7 +250,7 @@ export default function ManageDesignation() {
               {/* Table Footer / Pagination */}
               <div className="px-6 py-4 bg-white flex items-center justify-between border-t flex-wrap">
                 <span className="text-sm text-gray-600">
-                  Showing 1 to 1 of 1 entries
+                  Showing 0 to 0 of 0 entries
                 </span>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm" disabled>
@@ -295,13 +262,6 @@ export default function ManageDesignation() {
                     Next
                     <ChevronRight className="h-4 w-4" />
                   </Button>
-                </div>
-              </div>
-
-              {/* Horizontal Scrollbar */}
-              <div className="px-6 py-2 bg-white">
-                <div className="w-full h-2 bg-gray-200 rounded overflow-hidden">
-                  <div className="w-full h-full bg-gray-400"></div>
                 </div>
               </div>
             </>
@@ -316,6 +276,8 @@ export default function ManageDesignation() {
                     <Label htmlFor="schoolName" className="block text-sm font-medium mb-2 text-right">
                       School Name <span className="text-red-500">*</span>
                     </Label>
+                  </div>
+                  <div>
                     <Select value={schoolName} onValueChange={setSchoolName}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="--Select School--" />
@@ -327,25 +289,129 @@ export default function ManageDesignation() {
                       </SelectContent>
                     </Select>
                   </div>
+
                   <div>
-                    <Label htmlFor="designation" className="block text-sm font-medium mb-2 text-right">
-                      Designation <span className="text-red-500">*</span>
+                    <Label htmlFor="name" className="block text-sm font-medium mb-2 text-right">
+                      Name <span className="text-red-500">*</span>
                     </Label>
+                  </div>
+                  <div>
                     <Input
-                      id="designation"
+                      id="name"
                       type="text"
-                      placeholder="Designation"
-                      value={designation}
-                      onChange={(e) => setDesignation(e.target.value)}
+                      placeholder="Name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
                       className="w-full"
                     />
                   </div>
-                </div>
-                <div className="grid grid-cols-1 gap-6">
+
+                  <div>
+                    <Label htmlFor="phone" className="block text-sm font-medium mb-2 text-right">
+                      Phone <span className="text-red-500">*</span>
+                    </Label>
+                  </div>
+                  <div>
+                    <Input
+                      id="phone"
+                      type="text"
+                      placeholder="Phone"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="meetUserType" className="block text-sm font-medium mb-2 text-right">
+                      Meet User Type <span className="text-red-500">*</span>
+                    </Label>
+                  </div>
+                  <div>
+                    <Select value={meetUserType} onValueChange={setMeetUserType}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="--Select--" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="staff">Staff</SelectItem>
+                        <SelectItem value="teacher">Teacher</SelectItem>
+                        <SelectItem value="admin">Admin</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="toMeet" className="block text-sm font-medium mb-2 text-right">
+                      To Meet <span className="text-red-500">*</span>
+                    </Label>
+                  </div>
+                  <div>
+                    <Select value={toMeet} onValueChange={setToMeet}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="--Select--" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="principal">Principal</SelectItem>
+                        <SelectItem value="teacher">Teacher</SelectItem>
+                        <SelectItem value="admin">Admin</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="visitorPurpose" className="block text-sm font-medium mb-2 text-right">
+                      Visitor Purpose <span className="text-red-500">*</span>
+                    </Label>
+                  </div>
+                  <div>
+                    <Select value={visitorPurpose} onValueChange={setVisitorPurpose}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="--Select--" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="meeting">Meeting</SelectItem>
+                        <SelectItem value="enquiry">Enquiry</SelectItem>
+                        <SelectItem value="interview">Interview</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="checkIn" className="block text-sm font-medium mb-2 text-right">
+                      Check In
+                    </Label>
+                  </div>
+                  <div>
+                    <Input
+                      id="checkIn"
+                      type="datetime-local"
+                      value={checkIn}
+                      onChange={(e) => setCheckIn(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="checkOut" className="block text-sm font-medium mb-2 text-right">
+                      Check Out
+                    </Label>
+                  </div>
+                  <div>
+                    <Input
+                      id="checkOut"
+                      type="datetime-local"
+                      value={checkOut}
+                      onChange={(e) => setCheckOut(e.target.value)}
+                      className="w-full"
+                    />
+                  </div>
+
                   <div>
                     <Label htmlFor="note" className="block text-sm font-medium mb-2 text-right">
                       Note
                     </Label>
+                  </div>
+                  <div>
                     <Textarea
                       id="note"
                       placeholder="Note"
@@ -356,12 +422,12 @@ export default function ManageDesignation() {
                     />
                   </div>
                 </div>
-                <div className="flex gap-4">
-                  <Button type="submit" className="bg-blue-600 hover:bg-blue-700 text-white">
-                    {editingId !== null ? 'Update' : 'Save'}
-                  </Button>
-                  <Button type="button" variant="outline" onClick={handleCancel}>
+                <div className="flex justify-center gap-4">
+                  <Button type="button" variant="outline" onClick={() => setActiveTab('list')}>
                     Cancel
+                  </Button>
+                  <Button type="submit" className="bg-black text-white px-6 py-2 rounded-md hover:bg-gray-800">
+                    Submit
                   </Button>
                 </div>
               </form>
