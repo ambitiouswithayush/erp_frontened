@@ -1,313 +1,340 @@
 import { useState } from "react";
-import { ChevronUp, Mail, SquarePlus, Copy, FileText, Download, Search, Eye, Edit, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, Copy, FileText, FileSpreadsheet, File, Download, Edit, Trash2, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { FilterBar } from "@/components/FilterBar";
+
+interface EmailTemplate {
+  id: number;
+  school: string;
+  receiverType: string;
+  title: string;
+  template: string;
+}
+
+const mockEmailTemplates: EmailTemplate[] = [
+  {
+    id: 1,
+    school: "School A",
+    receiverType: "Student",
+    title: "Welcome Email",
+    template: "Dear {student_name}, Welcome to our school..."
+  },
+  {
+    id: 2,
+    school: "School B",
+    receiverType: "Teacher",
+    title: "Monthly Report",
+    template: "Dear {teacher_name}, Here is your monthly report..."
+  }
+];
 
 export default function ManageEmailTemplate() {
-  const [selectedRows, setSelectedRows] = useState("15");
-  const [selectedProvider, setSelectedProvider] = useState("smtp");
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [activeTab, setActiveTab] = useState<'list' | 'add'>('list');
+  const [activeQuickLink, setActiveQuickLink] = useState('Email Template');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showRows, setShowRows] = useState('15');
+  const [formData, setFormData] = useState({
+    school: '',
+    receiverType: '',
+    title: '',
+    template: ''
+  });
 
-  const emailSettings = [
-    {
-      sl: 1,
-      school: "School A",
-      provider: "SMTP",
-      status: "Active"
-    },
-    {
-      sl: 2,
-      school: "School B",
-      provider: "Gmail",
-      status: "Inactive"
-    }
-  ];
-
-  const renderProviderForm = () => {
-    switch (selectedProvider) {
-      case "smtp":
-        return (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <Mail className="w-8 h-8" />
-              <span className="font-semibold">SMTP Settings</span>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <Label htmlFor="host" className="block text-sm font-medium">Host <span className="text-red-500">*</span></Label>
-                <Input id="host" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-              <div>
-                <Label htmlFor="port" className="block text-sm font-medium">Port <span className="text-red-500">*</span></Label>
-                <Input id="port" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-              <div>
-                <Label htmlFor="username" className="block text-sm font-medium">Username <span className="text-red-500">*</span></Label>
-                <Input id="username" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-              <div>
-                <Label htmlFor="password" className="block text-sm font-medium">Password <span className="text-red-500">*</span></Label>
-                <Input id="password" type="password" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-            </div>
-          </div>
-        );
-      case "gmail":
-        return (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <img src="/gmail-logo.png" alt="Gmail" className="w-8 h-8" />
-              <span className="font-semibold">Gmail Settings</span>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <Label htmlFor="email" className="block text-sm font-medium">Email <span className="text-red-500">*</span></Label>
-                <Input id="email" type="email" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-              <div>
-                <Label htmlFor="appPassword" className="block text-sm font-medium">App Password <span className="text-red-500">*</span></Label>
-                <Input id="appPassword" type="password" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-            </div>
-          </div>
-        );
-      case "outlook":
-        return (
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 mb-4">
-              <img src="/outlook-logo.png" alt="Outlook" className="w-8 h-8" />
-              <span className="font-semibold">Outlook Settings</span>
-            </div>
-            <div className="grid grid-cols-1 gap-4">
-              <div>
-                <Label htmlFor="email" className="block text-sm font-medium">Email <span className="text-red-500">*</span></Label>
-                <Input id="email" type="email" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-              <div>
-                <Label htmlFor="password" className="block text-sm font-medium">Password <span className="text-red-500">*</span></Label>
-                <Input id="password" type="password" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-              </div>
-            </div>
-          </div>
-        );
-      default:
-        return <div>Select a provider</div>;
-    }
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission
+    console.log('Form submitted:', formData);
+    // Reset form
+    setFormData({
+      school: '',
+      receiverType: '',
+      title: '',
+      template: ''
+    });
   };
 
+  const filteredTemplates = mockEmailTemplates.filter(template =>
+    template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    template.school.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="w-full min-h-screen bg-gray-900 bg-opacity-50" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}>
-      <Card className="max-w-6xl mx-auto my-8 shadow-lg bg-white">
-        <CardHeader className="bg-purple-800 text-white flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <Mail className="h-5 w-5" />
-            Manage Email Template
-          </CardTitle>
-          <ChevronUp className="h-5 w-5" />
-        </CardHeader>
-        <CardContent className="p-0">
-          {/* Quick Links */}
-          <div className="px-6 py-4 bg-gray-50">
-            <div className="flex items-center flex-wrap">
-              <span className="text-sm font-medium mr-4">Quick Link:</span>
-              <div className="flex items-center space-x-2 text-blue-600 text-sm flex-wrap">
-                <a href="#" className="hover:underline font-semibold text-blue-800">Email Template</a>
-                <span>|</span>
-                <a href="#" className="hover:underline">SMS Template</a>
+    <div className="w-full min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
+      {/* Global Filter Bar */}
+      <FilterBar />
+
+      {/* Main Content Panel */}
+      <div className="max-w-7xl mx-auto p-6">
+        <Card className="shadow-lg">
+          <CardHeader className="bg-purple-800 text-white flex items-center justify-between">
+            <CardTitle className="flex items-center gap-2">
+              ✉️ Manage Email Template
+            </CardTitle>
+            <ChevronUp className="h-5 w-5" />
+          </CardHeader>
+
+          {!isCollapsed && (
+            <CardContent className="space-y-6">
+              {/* Quick Links Navigation */}
+              <div className="px-6 py-4 bg-gray-50">
+                <div className="flex items-center flex-wrap">
+                   <span className="text-sm font-medium mr-4">Quick Link:</span>
+                  <div className="flex items-center text-blue-600 text-sm flex-wrap">
+                    <a href="#" className="hover:underline font-semibold text-blue-800">Email Template</a>
+                    <span className="mx-1">|</span>
+                    <a href="#" className="hover:underline">SMS Template</a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
 
-          {/* Tab Buttons */}
-          <div className="px-6 py-4 bg-white flex gap-2">
-            <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="flex items-center gap-2 border-gray-300 text-black bg-blue-600 text-white hover:bg-blue-700"
-                  onClick={() => setIsAddDialogOpen(true)}
+              {/* Tab Navigation */}
+              <div className="flex space-x-1 border-b">
+                <button
+                  onClick={() => setActiveTab('list')}
+                  className={`px-4 py-2 text-sm font-medium ${
+                    activeTab === 'list'
+                      ? 'border-b-2 border-blue-500 text-blue-600'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
                 >
-                  <SquarePlus className="h-4 w-4" />
+                  List
+                </button>
+                <button
+                  onClick={() => setActiveTab('add')}
+                  className={`px-4 py-2 text-sm font-medium ${
+                    activeTab === 'add'
+                      ? 'border-b-2 border-blue-500 text-blue-600'
+                      : 'text-gray-500 hover:text-gray-700'
+                  }`}
+                >
                   Add
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="w-full max-w-full sm:max-w-4xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Add Email Template</DialogTitle>
-                </DialogHeader>
-                <div className="mt-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    {/* Left Navigation */}
-                    <div className="lg:col-span-1">
-                      <div className="bg-gray-100 p-4 rounded-md">
-                        <h3 className="text-lg font-semibold mb-4">Email Providers</h3>
-                        <div className="space-y-2">
-                          <Button
-                            variant={selectedProvider === 'smtp' ? 'default' : 'ghost'}
-                            className="w-full justify-start"
-                            onClick={() => setSelectedProvider('smtp')}
-                          >
-                            SMTP
-                          </Button>
-                          <Button
-                            variant={selectedProvider === 'gmail' ? 'default' : 'ghost'}
-                            className="w-full justify-start"
-                            onClick={() => setSelectedProvider('gmail')}
-                          >
-                            Gmail
-                          </Button>
-                          <Button
-                            variant={selectedProvider === 'outlook' ? 'default' : 'ghost'}
-                            className="w-full justify-start"
-                            onClick={() => setSelectedProvider('outlook')}
-                          >
-                            Outlook
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
+                </button>
+              </div>
 
-                    {/* Right Form */}
-                    <div className="lg:col-span-2">
-                      <div className="bg-gray-100 p-4 rounded-md">
-                        <h3 className="text-lg font-semibold mb-4">Configuration</h3>
-                        <form className="space-y-4">
-                          {renderProviderForm()}
-                          <div className="flex justify-end gap-4 pt-4">
-                            <Button type="button" variant="outline" onClick={() => setIsAddDialogOpen(false)}>
-                              Cancel
-                            </Button>
-                            <Button type="submit" className="bg-black text-white">
-                              Submit
-                            </Button>
-                          </div>
-                        </form>
+              {/* Tab Content */}
+              {activeTab === 'list' && (
+                <div className="space-y-4">
+                  {/* Sub-filters */}
+                  <div className="flex justify-end space-x-4">
+                    <Select>
+                      <SelectTrigger className="w-48">
+                        <SelectValue placeholder="--Select School--" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Schools</SelectItem>
+                        <SelectItem value="school-a">School A</SelectItem>
+                        <SelectItem value="school-b">School B</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Select>
+                      <SelectTrigger className="w-48">
+                        <SelectValue placeholder="--Select--" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Types</SelectItem>
+                        <SelectItem value="student">Student</SelectItem>
+                        <SelectItem value="teacher">Teacher</SelectItem>
+                        <SelectItem value="parent">Parent</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Table Controls */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-2">
+                      <Button variant="outline" size="sm">
+                        <Copy className="h-4 w-4 mr-1" />
+                        Copy
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <FileSpreadsheet className="h-4 w-4 mr-1" />
+                        Excel
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <File className="h-4 w-4 mr-1" />
+                        CSV
+                      </Button>
+                      <Button variant="outline" size="sm">
+                        <Download className="h-4 w-4 mr-1" />
+                        PDF
+                      </Button>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-sm">Show</span>
+                        <Select value={showRows} onValueChange={setShowRows}>
+                          <SelectTrigger className="w-20">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="10">10</SelectItem>
+                            <SelectItem value="15">15</SelectItem>
+                            <SelectItem value="25">25</SelectItem>
+                            <SelectItem value="50">50</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <span className="text-sm">rows</span>
+                      </div>
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Input
+                          placeholder="Search..."
+                          value={searchTerm}
+                          onChange={(e) => setSearchTerm(e.target.value)}
+                          className="pl-10 w-64"
+                        />
                       </div>
                     </div>
                   </div>
+
+                  {/* Data Table */}
+                  <div className="border rounded-lg overflow-hidden">
+                    <Table>
+                      <TableHeader>
+                        <TableRow className="bg-gray-50">
+                          <TableHead className="w-16">#SL</TableHead>
+                          <TableHead>School</TableHead>
+                          <TableHead>Receiver Type</TableHead>
+                          <TableHead>Title</TableHead>
+                          <TableHead>Template</TableHead>
+                          <TableHead className="w-24">Action</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {filteredTemplates.length > 0 ? (
+                          filteredTemplates.map((template, index) => (
+                            <TableRow key={template.id}>
+                              <TableCell>{index + 1}</TableCell>
+                              <TableCell>{template.school}</TableCell>
+                              <TableCell>
+                                <Badge variant="outline">{template.receiverType}</Badge>
+                              </TableCell>
+                              <TableCell>{template.title}</TableCell>
+                              <TableCell className="max-w-xs truncate">{template.template}</TableCell>
+                              <TableCell>
+                                <div className="flex space-x-1">
+                                  <Button variant="ghost" size="sm">
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="sm">
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </TableCell>
+                            </TableRow>
+                          ))
+                        ) : (
+                          <TableRow>
+                            <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                              No data available in table
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+
+                  {/* Table Footer */}
+                  <div className="flex items-center justify-between text-sm text-gray-600">
+                    <div>
+                      Showing 0 to {filteredTemplates.length} of {filteredTemplates.length} entries
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button variant="outline" size="sm" disabled>
+                        Previous
+                      </Button>
+                      <Button variant="outline" size="sm" disabled>
+                        Next
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </DialogContent>
-            </Dialog>
-          </div>
+              )}
 
-          {/* List View */}
-          <>
-            {/* Table Controls */}
-            <div className="px-6 py-4 bg-white flex items-center justify-between flex-wrap">
-              <div className="flex gap-2 mb-2 md:mb-0">
-                <Button variant="outline" size="sm" className="bg-gray-100 text-gray-600">
-                  <Copy className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="bg-gray-100 text-gray-600">
-                  <FileText className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm" className="bg-gray-100 text-gray-600">
-                  <Download className="h-4 w-4" />
-                </Button>
-                <Select value={selectedRows} onValueChange={setSelectedRows}>
-                  <SelectTrigger className="w-32 bg-gray-100">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="15">Show 15 rows</SelectItem>
-                    <SelectItem value="25">Show 25 rows</SelectItem>
-                    <SelectItem value="50">Show 50 rows</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex items-center gap-2 flex-wrap">
-                <Select>
-                  <SelectTrigger className="w-48 bg-gray-100">
-                    <SelectValue placeholder="--Select School--" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="school1">School 1</SelectItem>
-                    <SelectItem value="school2">School 2</SelectItem>
-                  </SelectContent>
-                </Select>
-                <div className="relative">
-                  <span className="text-sm mr-2">Search:</span>
-                  <Search className="absolute left-16 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
-                  <Input placeholder="" className="pl-20 w-48" />
+              {activeTab === 'add' && (
+                <div className="max-w-2xl mx-auto">
+                  <form onSubmit={handleFormSubmit} className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <Label htmlFor="school" className="text-right self-center">
+                        School <span className="text-red-500">*</span>
+                      </Label>
+                      <Select
+                        value={formData.school}
+                        onValueChange={(value) => setFormData({...formData, school: value})}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="--Select School--" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="school-a">School A</SelectItem>
+                          <SelectItem value="school-b">School B</SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <Label htmlFor="receiverType" className="text-right self-center">
+                        Receiver Type <span className="text-red-500">*</span>
+                      </Label>
+                      <Select
+                        value={formData.receiverType}
+                        onValueChange={(value) => setFormData({...formData, receiverType: value})}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="--Select--" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="student">Student</SelectItem>
+                          <SelectItem value="teacher">Teacher</SelectItem>
+                          <SelectItem value="parent">Parent</SelectItem>
+                        </SelectContent>
+                      </Select>
+
+                      <Label htmlFor="title" className="text-right self-center">
+                        Title <span className="text-red-500">*</span>
+                      </Label>
+                      <Input
+                        id="title"
+                        value={formData.title}
+                        onChange={(e) => setFormData({...formData, title: e.target.value})}
+                        placeholder="Enter template title"
+                      />
+
+                      <Label htmlFor="template" className="text-right self-start pt-2">
+                        Template <span className="text-red-500">*</span>
+                      </Label>
+                      <Textarea
+                        id="template"
+                        value={formData.template}
+                        onChange={(e) => setFormData({...formData, template: e.target.value})}
+                        placeholder="Enter email template content"
+                        rows={6}
+                        className="resize-none"
+                      />
+                    </div>
+
+                    <div className="flex justify-end space-x-4 pt-6 border-t">
+                      <Button type="button" variant="outline">
+                        Cancel
+                      </Button>
+                      <Button type="submit" className="bg-black text-white hover:bg-gray-800">
+                        <Plus className="h-4 w-4 mr-2" />
+                        Submit
+                      </Button>
+                    </div>
+                  </form>
                 </div>
-              </div>
-            </div>
-
-            {/* Separator Line */}
-            <div className="px-6 py-2 bg-white">
-              <hr className="border-gray-300 opacity-50" />
-            </div>
-
-            {/* Data Table */}
-            <div className="px-6 py-4 bg-white overflow-x-auto">
-              <Table className="border-collapse min-w-full">
-                <TableHeader>
-                  <TableRow className="bg-gray-100">
-                    <TableHead className="border-r border-gray-200">#SL</TableHead>
-                    <TableHead className="border-r border-gray-200">School <ChevronUp className="inline h-4 w-4" /></TableHead>
-                    <TableHead className="border-r border-gray-200">Receiver Type</TableHead>
-                    <TableHead className="border-r border-gray-200">Title</TableHead>
-                    <TableHead className="border-r border-gray-200">Template</TableHead>
-                    <TableHead>Action <ChevronUp className="inline h-4 w-4" /></TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {emailSettings.map((setting) => (
-                    <TableRow key={setting.sl} className="border-b">
-                      <TableCell className="border-r border-gray-200">{setting.sl}</TableCell>
-                      <TableCell className="border-r border-gray-200">{setting.school}</TableCell>
-                      <TableCell className="border-r border-gray-200">{setting.provider}</TableCell>
-                      <TableCell className="border-r border-gray-200">{setting.status}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          <Button size="sm" variant="outline" className="text-blue-600">
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <Button size="sm" variant="outline" className="text-blue-600">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                          <Button size="sm" variant="outline" className="text-red-600">
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-
-            {/* Table Footer / Pagination */}
-            <div className="px-6 py-4 bg-white flex items-center justify-between border-t flex-wrap">
-              <span className="text-sm text-gray-600">Showing 1 to {emailSettings.length} of {emailSettings.length} entries</span>
-              <div className="flex items-center gap-2">
-                <Button variant="outline" size="sm" disabled>
-                  <ChevronLeft className="h-4 w-4" />
-                  Previous
-                </Button>
-                <Button variant="outline" size="sm" className="bg-white border-gray-300">1</Button>
-                <Button variant="outline" size="sm" disabled>
-                  Next
-                  <ChevronRight className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Custom Scrollbar */}
-            <div className="px-6 py-2 bg-white">
-              <div className="w-full h-2 bg-gray-200 rounded">
-                <div className="h-full bg-gray-400 rounded" style={{ width: '50%' }}></div>
-              </div>
-            </div>
-          </>
-        </CardContent>
-      </Card>
+              )}
+            </CardContent>
+          )}
+        </Card>
+      </div>
     </div>
   );
 }

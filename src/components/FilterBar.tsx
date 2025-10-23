@@ -1,5 +1,6 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Search } from "lucide-react";
 
 interface FilterBarProps {
@@ -7,25 +8,15 @@ interface FilterBarProps {
   onSessionChange?: (value: string) => void;
   onYearChange?: (value: string) => void;
   onSearch?: (value: string) => void;
+  onUpdate?: () => void;
 }
 
-export function FilterBar({ onSchoolChange, onSessionChange, onYearChange, onSearch }: FilterBarProps) {
+export function FilterBar({ onSchoolChange, onSessionChange, onYearChange, onSearch, onUpdate }: FilterBarProps) {
   return (
-    <div className="flex flex-wrap gap-4 p-4 bg-card rounded-lg border">
-      <div className="flex-1 min-w-[200px]">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Global search..."
-            className="pl-9"
-            onChange={(e) => onSearch?.(e.target.value)}
-          />
-        </div>
-      </div>
-      
+    <div className="w-full bg-white border-b p-4 flex flex-wrap items-center gap-4">
       <Select onValueChange={onSchoolChange}>
         <SelectTrigger className="w-[200px]">
-          <SelectValue placeholder="Select School" />
+          <SelectValue placeholder="--Select School--" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="all">All Schools</SelectItem>
@@ -36,9 +27,20 @@ export function FilterBar({ onSchoolChange, onSessionChange, onYearChange, onSea
         </SelectContent>
       </Select>
 
+      <div className="flex-1 min-w-[200px]">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            placeholder="Global Search"
+            className="pl-9"
+            onChange={(e) => onSearch?.(e.target.value)}
+          />
+        </div>
+      </div>
+
       <Select onValueChange={onSessionChange}>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select Session" />
+        <SelectTrigger className="w-[200px]">
+          <SelectValue placeholder="--Select Session--" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="spring">Spring 2024</SelectItem>
@@ -49,8 +51,8 @@ export function FilterBar({ onSchoolChange, onSessionChange, onYearChange, onSea
       </Select>
 
       <Select onValueChange={onYearChange}>
-        <SelectTrigger className="w-[150px]">
-          <SelectValue placeholder="Academic Year" />
+        <SelectTrigger className="w-[200px]">
+          <SelectValue placeholder="--Session Year--" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="2024-2025">2024-2025</SelectItem>
@@ -58,6 +60,10 @@ export function FilterBar({ onSchoolChange, onSessionChange, onYearChange, onSea
           <SelectItem value="2022-2023">2022-2023</SelectItem>
         </SelectContent>
       </Select>
+
+      <Button onClick={onUpdate} className="bg-[#61D02E] text-white hover:bg-[#4CAF50]">
+        Update
+      </Button>
     </div>
   );
 }

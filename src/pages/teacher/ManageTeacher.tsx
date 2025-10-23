@@ -155,7 +155,7 @@ export default function ManageTeacher() {
   return (
     <div className="w-full min-h-screen bg-gray-900 bg-opacity-50" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}>
       {/* Main Header Bar */}
-      <div className="bg-blue-600 text-white p-4">
+      <div className="bg-purple-800 text-white p-4">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
           <ArrowLeft className="h-6 w-6 cursor-pointer" />
           <h1 className="text-xl font-bold">Manage Teacher</h1>
@@ -177,19 +177,28 @@ export default function ManageTeacher() {
           </div>
 
           {/* Tab Controls */}
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="list" className="flex items-center gap-2">
-                <List className="h-4 w-4" />
-                List
-              </TabsTrigger>
-              <TabsTrigger value="add" className="flex items-center gap-2">
-                <Plus className="h-4 w-4" />
-                Add
-              </TabsTrigger>
-            </TabsList>
+          <div className="flex gap-2">
+            <Button
+              variant={activeTab === 'list' ? 'default' : 'outline'}
+              className={`flex items-center gap-2 ${activeTab === 'list' ? 'bg-blue-600 text-white' : 'border-gray-300 text-black'}`}
+              onClick={() => setActiveTab('list')}
+            >
+              <List className="h-4 w-4" />
+              List
+            </Button>
+            <Button
+              variant={activeTab === 'add' ? 'default' : 'outline'}
+              className={`flex items-center gap-2 ${activeTab === 'add' ? 'bg-blue-600 text-white' : 'border-gray-300 text-black'}`}
+              onClick={() => setActiveTab('add')}
+            >
+              <Plus className="h-4 w-4" />
+              Add
+            </Button>
+          </div>
 
-            <TabsContent value="list" className="mt-6">
+          {/* List View */}
+          {activeTab === 'list' && (
+            <div className="mt-6">
               {/* Table Actions & Search Bar */}
               <div className="bg-white p-4 border-b">
                 <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
@@ -327,348 +336,307 @@ export default function ManageTeacher() {
                   </div>
                 </div>
               </div>
-            </TabsContent>
+            </div>
+          )}
 
-            {/* Add Tab */}
-            <TabsContent value="add" className="mt-6">
+          {/* Add View */}
+          {activeTab === 'add' && (
+            <div className="mt-6">
               <Card>
                 <CardHeader>
                   <CardTitle>Add New Teacher</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleFormSubmit} className="space-y-6">
-                    {/* Basic Information Section */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Basic Information</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="firstName">First Name *</Label>
-                          <Input
-                            id="firstName"
-                            value={formData.firstName}
-                            onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="lastName">Last Name *</Label>
-                          <Input
-                            id="lastName"
-                            value={formData.lastName}
-                            onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="email">Email *</Label>
-                          <Input
-                            id="email"
-                            type="email"
-                            value={formData.email}
-                            onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="phone">Phone *</Label>
-                          <Input
-                            id="phone"
-                            value={formData.phone}
-                            onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="gender">Gender *</Label>
-                          <Select value={formData.gender} onValueChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select gender" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="male">Male</SelectItem>
-                              <SelectItem value="female">Female</SelectItem>
-                              <SelectItem value="other">Other</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="dateOfBirth">Date of Birth</Label>
-                          <Input
-                            id="dateOfBirth"
-                            type="date"
-                            value={formData.dateOfBirth}
-                            onChange={(e) => setFormData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
-                          />
-                        </div>
-                        <div className="md:col-span-2">
-                          <Label htmlFor="address">Address</Label>
-                          <Textarea
-                            id="address"
-                            value={formData.address}
-                            onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="city">City</Label>
-                          <Input
-                            id="city"
-                            value={formData.city}
-                            onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="state">State</Label>
-                          <Input
-                            id="state"
-                            value={formData.state}
-                            onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="zipCode">Zip Code</Label>
-                          <Input
-                            id="zipCode"
-                            value={formData.zipCode}
-                            onChange={(e) => setFormData(prev => ({ ...prev, zipCode: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="country">Country</Label>
-                          <Input
-                            id="country"
-                            value={formData.country}
-                            onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
-                          />
-                        </div>
+                    {/* Basic Information */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="firstName">First Name *</Label>
+                        <Input
+                          id="firstName"
+                          value={formData.firstName}
+                          onChange={(e) => setFormData(prev => ({ ...prev, firstName: e.target.value }))}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="lastName">Last Name *</Label>
+                        <Input
+                          id="lastName"
+                          value={formData.lastName}
+                          onChange={(e) => setFormData(prev => ({ ...prev, lastName: e.target.value }))}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Email *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone *</Label>
+                        <Input
+                          id="phone"
+                          value={formData.phone}
+                          onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="gender">Gender</Label>
+                        <Select value={formData.gender} onValueChange={(value) => setFormData(prev => ({ ...prev, gender: value }))}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select gender" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="male">Male</SelectItem>
+                            <SelectItem value="female">Female</SelectItem>
+                            <SelectItem value="other">Other</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="dateOfBirth">Date of Birth</Label>
+                        <Input
+                          id="dateOfBirth"
+                          type="date"
+                          value={formData.dateOfBirth}
+                          onChange={(e) => setFormData(prev => ({ ...prev, dateOfBirth: e.target.value }))}
+                        />
                       </div>
                     </div>
 
-                    {/* Academic Information Section */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Academic Information</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="department">Department *</Label>
-                          <Select value={formData.department} onValueChange={(value) => setFormData(prev => ({ ...prev, department: value }))}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select department" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="mathematics">Mathematics</SelectItem>
-                              <SelectItem value="science">Science</SelectItem>
-                              <SelectItem value="english">English</SelectItem>
-                              <SelectItem value="history">History</SelectItem>
-                              <SelectItem value="computer-science">Computer Science</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="designation">Designation *</Label>
-                          <Select value={formData.designation} onValueChange={(value) => setFormData(prev => ({ ...prev, designation: value }))}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select designation" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="professor">Professor</SelectItem>
-                              <SelectItem value="associate-professor">Associate Professor</SelectItem>
-                              <SelectItem value="assistant-professor">Assistant Professor</SelectItem>
-                              <SelectItem value="lecturer">Lecturer</SelectItem>
-                              <SelectItem value="teaching-assistant">Teaching Assistant</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="qualification">Qualification</Label>
-                          <Input
-                            id="qualification"
-                            value={formData.qualification}
-                            onChange={(e) => setFormData(prev => ({ ...prev, qualification: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="experience">Experience (Years)</Label>
-                          <Input
-                            id="experience"
-                            type="number"
-                            value={formData.experience}
-                            onChange={(e) => setFormData(prev => ({ ...prev, experience: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="joiningDate">Joining Date *</Label>
-                          <Input
-                            id="joiningDate"
-                            type="date"
-                            value={formData.joiningDate}
-                            onChange={(e) => setFormData(prev => ({ ...prev, joiningDate: e.target.value }))}
-                            required
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="salary">Salary</Label>
-                          <Input
-                            id="salary"
-                            type="number"
-                            value={formData.salary}
-                            onChange={(e) => setFormData(prev => ({ ...prev, salary: e.target.value }))}
-                          />
-                        </div>
+                    {/* Address Information */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="md:col-span-2">
+                        <Label htmlFor="address">Address</Label>
+                        <Textarea
+                          id="address"
+                          value={formData.address}
+                          onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="city">City</Label>
+                        <Input
+                          id="city"
+                          value={formData.city}
+                          onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="state">State</Label>
+                        <Input
+                          id="state"
+                          value={formData.state}
+                          onChange={(e) => setFormData(prev => ({ ...prev, state: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="zipCode">Zip Code</Label>
+                        <Input
+                          id="zipCode"
+                          value={formData.zipCode}
+                          onChange={(e) => setFormData(prev => ({ ...prev, zipCode: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="country">Country</Label>
+                        <Input
+                          id="country"
+                          value={formData.country}
+                          onChange={(e) => setFormData(prev => ({ ...prev, country: e.target.value }))}
+                        />
                       </div>
                     </div>
 
-                    {/* Other Information Section */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">Other Information</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="emergencyContact">Emergency Contact</Label>
-                          <Input
-                            id="emergencyContact"
-                            value={formData.emergencyContact}
-                            onChange={(e) => setFormData(prev => ({ ...prev, emergencyContact: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="bloodGroup">Blood Group</Label>
-                          <Select value={formData.bloodGroup} onValueChange={(value) => setFormData(prev => ({ ...prev, bloodGroup: value }))}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select blood group" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="A+">A+</SelectItem>
-                              <SelectItem value="A-">A-</SelectItem>
-                              <SelectItem value="B+">B+</SelectItem>
-                              <SelectItem value="B-">B-</SelectItem>
-                              <SelectItem value="AB+">AB+</SelectItem>
-                              <SelectItem value="AB-">AB-</SelectItem>
-                              <SelectItem value="O+">O+</SelectItem>
-                              <SelectItem value="O-">O-</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="religion">Religion</Label>
-                          <Input
-                            id="religion"
-                            value={formData.religion}
-                            onChange={(e) => setFormData(prev => ({ ...prev, religion: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="nationality">Nationality</Label>
-                          <Input
-                            id="nationality"
-                            value={formData.nationality}
-                            onChange={(e) => setFormData(prev => ({ ...prev, nationality: e.target.value }))}
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="maritalStatus">Marital Status</Label>
-                          <Select value={formData.maritalStatus} onValueChange={(value) => setFormData(prev => ({ ...prev, maritalStatus: value }))}>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select marital status" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="single">Single</SelectItem>
-                              <SelectItem value="married">Married</SelectItem>
-                              <SelectItem value="divorced">Divorced</SelectItem>
-                              <SelectItem value="widowed">Widowed</SelectItem>
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label htmlFor="displayOrder">Display Order</Label>
-                          <Input
-                            id="displayOrder"
-                            type="number"
-                            value={formData.displayOrder}
-                            onChange={(e) => setFormData(prev => ({ ...prev, displayOrder: e.target.value }))}
-                          />
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="isViewOnWeb"
-                            checked={formData.isViewOnWeb}
-                            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isViewOnWeb: checked as boolean }))}
-                          />
-                          <Label htmlFor="isViewOnWeb">Is View on Web</Label>
-                        </div>
+                    {/* Academic Information */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="department">Department *</Label>
+                        <Select value={formData.department} onValueChange={(value) => setFormData(prev => ({ ...prev, department: value }))}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select department" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="math">Mathematics</SelectItem>
+                            <SelectItem value="science">Science</SelectItem>
+                            <SelectItem value="english">English</SelectItem>
+                            <SelectItem value="history">History</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="designation">Designation *</Label>
+                        <Select value={formData.designation} onValueChange={(value) => setFormData(prev => ({ ...prev, designation: value }))}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select designation" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="teacher">Teacher</SelectItem>
+                            <SelectItem value="senior-teacher">Senior Teacher</SelectItem>
+                            <SelectItem value="head-teacher">Head Teacher</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="qualification">Qualification</Label>
+                        <Input
+                          id="qualification"
+                          value={formData.qualification}
+                          onChange={(e) => setFormData(prev => ({ ...prev, qualification: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="experience">Experience (years)</Label>
+                        <Input
+                          id="experience"
+                          type="number"
+                          value={formData.experience}
+                          onChange={(e) => setFormData(prev => ({ ...prev, experience: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="joiningDate">Joining Date *</Label>
+                        <Input
+                          id="joiningDate"
+                          type="date"
+                          value={formData.joiningDate}
+                          onChange={(e) => setFormData(prev => ({ ...prev, joiningDate: e.target.value }))}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="salary">Salary</Label>
+                        <Input
+                          id="salary"
+                          type="number"
+                          value={formData.salary}
+                          onChange={(e) => setFormData(prev => ({ ...prev, salary: e.target.value }))}
+                        />
+                      </div>
+                    </div>
+
+                    {/* Other Information */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="emergencyContact">Emergency Contact</Label>
+                        <Input
+                          id="emergencyContact"
+                          value={formData.emergencyContact}
+                          onChange={(e) => setFormData(prev => ({ ...prev, emergencyContact: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="bloodGroup">Blood Group</Label>
+                        <Select value={formData.bloodGroup} onValueChange={(value) => setFormData(prev => ({ ...prev, bloodGroup: value }))}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select blood group" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="A+">A+</SelectItem>
+                            <SelectItem value="A-">A-</SelectItem>
+                            <SelectItem value="B+">B+</SelectItem>
+                            <SelectItem value="B-">B-</SelectItem>
+                            <SelectItem value="AB+">AB+</SelectItem>
+                            <SelectItem value="AB-">AB-</SelectItem>
+                            <SelectItem value="O+">O+</SelectItem>
+                            <SelectItem value="O-">O-</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="religion">Religion</Label>
+                        <Input
+                          id="religion"
+                          value={formData.religion}
+                          onChange={(e) => setFormData(prev => ({ ...prev, religion: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="nationality">Nationality</Label>
+                        <Input
+                          id="nationality"
+                          value={formData.nationality}
+                          onChange={(e) => setFormData(prev => ({ ...prev, nationality: e.target.value }))}
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="maritalStatus">Marital Status</Label>
+                        <Select value={formData.maritalStatus} onValueChange={(value) => setFormData(prev => ({ ...prev, maritalStatus: value }))}>
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select marital status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="single">Single</SelectItem>
+                            <SelectItem value="married">Married</SelectItem>
+                            <SelectItem value="divorced">Divorced</SelectItem>
+                            <SelectItem value="widowed">Widowed</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label htmlFor="displayOrder">Display Order</Label>
+                        <Input
+                          id="displayOrder"
+                          type="number"
+                          value={formData.displayOrder}
+                          onChange={(e) => setFormData(prev => ({ ...prev, displayOrder: e.target.value }))}
+                        />
                       </div>
                     </div>
 
                     {/* File Uploads */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-gray-800 border-b pb-2">File Uploads</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                          <Label htmlFor="photo">Photo</Label>
-                          <div className="flex items-center gap-2">
-                            <Input
-                              id="photo"
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => handleFileChange(e, "photo")}
-                              className="hidden"
-                            />
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={() => document.getElementById("photo")?.click()}
-                              className="flex items-center gap-2"
-                            >
-                              <Upload className="h-4 w-4" />
-                              Choose Photo
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="photo">Photo</Label>
+                        <div className="flex items-center gap-2">
+                          <Input
+                            id="photo"
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleFileChange(e, "photo")}
+                          />
+                          {photoFile && (
+                            <Button type="button" variant="outline" size="sm" onClick={() => removeFile("photo")}>
+                              <X className="h-4 w-4" />
                             </Button>
-                            {photoFile && (
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-600">{photoFile.name}</span>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => removeFile("photo")}
-                                >
-                                  <X className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            )}
-                          </div>
+                          )}
                         </div>
-                        <div>
-                          <Label htmlFor="resume">Resume</Label>
-                          <div className="flex items-center gap-2">
-                            <Input
-                              id="resume"
-                              type="file"
-                              accept=".pdf,.doc,.docx"
-                              onChange={(e) => handleFileChange(e, "resume")}
-                              className="hidden"
-                            />
-                            <Button
-                              type="button"
-                              variant="outline"
-                              onClick={() => document.getElementById("resume")?.click()}
-                              className="flex items-center gap-2"
-                            >
-                              <Upload className="h-4 w-4" />
-                              Choose Resume
-                            </Button>
-                            {resumeFile && (
-                              <div className="flex items-center gap-2">
-                                <span className="text-sm text-gray-600">{resumeFile.name}</span>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="sm"
-                                  onClick={() => removeFile("resume")}
-                                >
-                                  <X className="h-4 w-4" />
-                                </Button>
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                        {photoFile && <p className="text-sm text-gray-600 mt-1">{photoFile.name}</p>}
                       </div>
+                      <div>
+                        <Label htmlFor="resume">Resume</Label>
+                        <div className="flex items-center gap-2">
+                          <Input
+                            id="resume"
+                            type="file"
+                            accept=".pdf,.doc,.docx"
+                            onChange={(e) => handleFileChange(e, "resume")}
+                          />
+                          {resumeFile && (
+                            <Button type="button" variant="outline" size="sm" onClick={() => removeFile("resume")}>
+                              <X className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                        {resumeFile && <p className="text-sm text-gray-600 mt-1">{resumeFile.name}</p>}
+                      </div>
+                    </div>
+
+                    {/* Is View on Web */}
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="isViewOnWeb"
+                        checked={formData.isViewOnWeb}
+                        onCheckedChange={(checked) => setFormData(prev => ({ ...prev, isViewOnWeb: checked as boolean }))}
+                      />
+                      <Label htmlFor="isViewOnWeb">Is View on Web</Label>
                     </div>
 
                     {/* Submit Button */}
@@ -681,8 +649,8 @@ export default function ManageTeacher() {
                   </form>
                 </CardContent>
               </Card>
-            </TabsContent>
-          </Tabs>
+            </div>
+          )}
         </div>
       </div>
     </div>

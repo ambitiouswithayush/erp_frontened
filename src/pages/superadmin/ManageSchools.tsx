@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function ManageSchools() {
   const [activeTab, setActiveTab] = useState<'list' | 'add'>('list');
@@ -135,7 +136,7 @@ export default function ManageSchools() {
                   Add
                 </Button>
               </DialogTrigger>
-              <DialogContent className="w-full max-w-full sm:max-w-5xl max-h-[90vh] overflow-y-auto">
+              <DialogContent className="w-full max-w-full sm:max-w-4xl md:max-w-5xl lg:max-w-6xl max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                   <DialogTitle>School Settings</DialogTitle>
                 </DialogHeader>
@@ -143,17 +144,17 @@ export default function ManageSchools() {
                   <form className="space-y-6">
                     {/* Basic Information Section */}
                     <div className="bg-gray-100 p-4 rounded-md">
-                      <h3 className="text-lg font-semibold mb-4">Basic Information</h3>
+                      <h3 className="text-lg font-semibold mb-4">Basic Information:</h3>
                       <div className="grid grid-cols-1 gap-4 mb-4">
                         <div>
                           <Label htmlFor="schoolUrl" className="block text-sm font-medium">
                             School URL <span className="text-red-500">*</span>
                           </Label>
-                          <Input id="schoolUrl" type="text" placeholder="e.g., south-point" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-                          <p className="text-xs text-gray-500 mt-1">No space, no capital letter, no special character.</p>
+                          <Input id="schoolUrl" type="text" placeholder="south-point" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <p className="text-xs text-gray-500 mt-1">No Space, No Capital Letter, No Special Character. Ex. south-point OR liverpool</p>
                         </div>
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         <div>
                           <Label htmlFor="schoolCode" className="block text-sm font-medium">School Code</Label>
                           <Input id="schoolCode" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
@@ -178,46 +179,46 @@ export default function ManageSchools() {
                         </div>
                         <div>
                           <Label htmlFor="registrationDate" className="block text-sm font-medium">Registration Date</Label>
-                          <Input id="registrationDate" type="date" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="registrationDate" type="text" placeholder="Registration Date" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="email" className="block text-sm font-medium">
                             Email <span className="text-red-500">*</span>
                           </Label>
-                          <Input id="email" type="email" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="email" type="email" placeholder="Email" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="fax" className="block text-sm font-medium">Fax</Label>
-                          <Input id="fax" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="fax" type="text" placeholder="Fax" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="footer" className="block text-sm font-medium">Footer</Label>
-                          <Input id="footer" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="footer" type="text" placeholder="Footer" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                       </div>
                     </div>
 
                     {/* Setting Information Section */}
                     <div className="bg-gray-100 p-4 rounded-md">
-                      <h3 className="text-lg font-semibold mb-4">Setting Information</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                      <h3 className="text-lg font-semibold mb-4">Setting Information:</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         <div>
                           <Label htmlFor="currency" className="block text-sm font-medium">Currency</Label>
-                          <Input id="currency" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="currency" type="text" placeholder="Currency" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="currencySymbol" className="block text-sm font-medium">
                             Currency Symbol <span className="text-red-500">*</span>
                           </Label>
-                          <Input id="currencySymbol" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="currencySymbol" type="text" placeholder="Currency Symbol" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="enableFrontend" className="block text-sm font-medium">
                             Enable Frontend <span className="text-red-500">*</span>
                           </Label>
-                          <Select>
+                          <Select defaultValue="yes">
                             <SelectTrigger className="mt-1 block w-full border-gray-300 bg-white px-3 py-2">
-                              <SelectValue placeholder="Select" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="yes">Yes</SelectItem>
@@ -227,11 +228,11 @@ export default function ManageSchools() {
                         </div>
                         <div>
                           <Label htmlFor="examFinalResult" className="block text-sm font-medium">
-                            Exam Final Result <span className="text-red-500">*</span>
+                            Exam final result <span className="text-red-500">*</span>
                           </Label>
-                          <Select>
+                          <Select defaultValue="average">
                             <SelectTrigger className="mt-1 block w-full border-gray-300 bg-white px-3 py-2">
-                              <SelectValue placeholder="Select" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="average">Average of All Exam</SelectItem>
@@ -240,36 +241,45 @@ export default function ManageSchools() {
                           </Select>
                         </div>
                         <div>
-                          <Label htmlFor="language" className="block text-sm font-medium">Language</Label>
-                          <Select>
+                          <Label htmlFor="language" className="block text-sm font-medium">
+                            Language <span className="text-red-500">*</span>
+                          </Label>
+                          <Select defaultValue="-select-">
                             <SelectTrigger className="mt-1 block w-full border-gray-300 bg-white px-3 py-2">
-                              <SelectValue placeholder="Select" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
+                              <SelectItem value="-select-">-Select-</SelectItem>
                               <SelectItem value="english">English</SelectItem>
                               <SelectItem value="spanish">Spanish</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
                         <div>
-                          <Label htmlFor="theme" className="block text-sm font-medium">Theme</Label>
-                          <Select>
+                          <Label htmlFor="theme" className="block text-sm font-medium">
+                            Theme <span className="text-red-500">*</span>
+                          </Label>
+                          <Select defaultValue="-select-">
                             <SelectTrigger className="mt-1 block w-full border-gray-300 bg-white px-3 py-2">
-                              <SelectValue placeholder="Select" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
+                              <SelectItem value="-select-">-Select-</SelectItem>
                               <SelectItem value="light">Light</SelectItem>
                               <SelectItem value="dark">Dark</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>
                         <div>
-                          <Label htmlFor="onlineAdmission" className="block text-sm font-medium">Online Admission</Label>
-                          <Select>
+                          <Label htmlFor="onlineAdmission" className="block text-sm font-medium">
+                            Online Admission <span className="text-red-500">*</span>
+                          </Label>
+                          <Select defaultValue="-select-">
                             <SelectTrigger className="mt-1 block w-full border-gray-300 bg-white px-3 py-2">
-                              <SelectValue placeholder="Select" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
+                              <SelectItem value="-select-">-Select-</SelectItem>
                               <SelectItem value="yes">Yes</SelectItem>
                               <SelectItem value="no">No</SelectItem>
                             </SelectContent>
@@ -277,9 +287,9 @@ export default function ManageSchools() {
                         </div>
                         <div>
                           <Label htmlFor="enableRtl" className="block text-sm font-medium">Enable RTL</Label>
-                          <Select>
+                          <Select defaultValue="no">
                             <SelectTrigger className="mt-1 block w-full border-gray-300 bg-white px-3 py-2">
-                              <SelectValue placeholder="Select" />
+                              <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectItem value="yes">Yes</SelectItem>
@@ -288,76 +298,74 @@ export default function ManageSchools() {
                           </Select>
                         </div>
                       </div>
-                    </div>
-
-                    {/* Zoom Integration Section */}
-                    <div className="bg-gray-100 p-4 rounded-md">
-                      <h3 className="text-lg font-semibold mb-4">Zoom Integration</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                         <div>
-                          <Label htmlFor="zoomApiKey" className="block text-sm font-medium">Zoom API Key</Label>
-                          <Input id="zoomApiKey" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Label htmlFor="zoomApiKey" className="block text-sm font-medium">Zoom Api Key</Label>
+                          <Input id="zoomApiKey" type="text" placeholder="Zoom Api Key" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="zoomSecret" className="block text-sm font-medium">Zoom Secret</Label>
-                          <Input id="zoomSecret" type="text" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="zoomSecret" type="text" placeholder="Zoom Secret" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                       </div>
-                    </div>
-
-                    {/* Google Map Section */}
-                    <div className="bg-gray-100 p-4 rounded-md">
-                      <h3 className="text-lg font-semibold mb-4">Google Map</h3>
-                      <div>
-                        <Label htmlFor="googleMap" className="block text-sm font-medium">Embed Map Iframe</Label>
-                        <textarea id="googleMap" rows={4} className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" placeholder="Paste your Google Map embed code here"></textarea>
+                      <div className="mt-4">
+                        <Label htmlFor="googleMap" className="block text-sm font-medium">Google Map</Label>
+                        <Textarea id="googleMap" placeholder="Google Map" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                       </div>
                     </div>
 
                     {/* Social Information Section */}
                     <div className="bg-gray-100 p-4 rounded-md">
-                      <h3 className="text-lg font-semibold mb-4">Social Information</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <h3 className="text-lg font-semibold mb-4">Social Information:</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                         <div>
                           <Label htmlFor="facebookUrl" className="block text-sm font-medium">Facebook URL</Label>
-                          <Input id="facebookUrl" type="url" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="facebookUrl" type="url" placeholder="Facebook URL" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="twitterUrl" className="block text-sm font-medium">Twitter URL</Label>
-                          <Input id="twitterUrl" type="url" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="twitterUrl" type="url" placeholder="Twitter URL" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
-                          <Label htmlFor="linkedinUrl" className="block text-sm font-medium">LinkedIn URL</Label>
-                          <Input id="linkedinUrl" type="url" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Label htmlFor="linkedinUrl" className="block text-sm font-medium">Linkedin URL</Label>
+                          <Input id="linkedinUrl" type="url" placeholder="Linkedin URL" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
-                          <Label htmlFor="youtubeUrl" className="block text-sm font-medium">YouTube URL</Label>
-                          <Input id="youtubeUrl" type="url" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Label htmlFor="youtubeUrl" className="block text-sm font-medium">Youtube URL</Label>
+                          <Input id="youtubeUrl" type="url" placeholder="Youtube URL" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="instagramUrl" className="block text-sm font-medium">Instagram URL</Label>
-                          <Input id="instagramUrl" type="url" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="instagramUrl" type="url" placeholder="Instagram URL" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                         <div>
                           <Label htmlFor="pinterestUrl" className="block text-sm font-medium">Pinterest URL</Label>
-                          <Input id="pinterestUrl" type="url" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
+                          <Input id="pinterestUrl" type="url" placeholder="Pinterest URL" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
                         </div>
                       </div>
                     </div>
 
                     {/* Other Information Section */}
                     <div className="bg-gray-100 p-4 rounded-md">
-                      <h3 className="text-lg font-semibold mb-4">Other Information</h3>
+                      <h3 className="text-lg font-semibold mb-4">Other Information:</h3>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <Label htmlFor="frontendLogo" className="block text-sm font-medium">Upload Frontend Logo</Label>
-                          <Input id="frontendLogo" type="file" accept="image/*" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-                          <p className="text-xs text-gray-500 mt-1">Max-width: 150px, Max-height: 90px</p>
+                          <Label htmlFor="frontendLogo" className="block text-sm font-medium">Frontend Logo</Label>
+                          <div className="mt-1">
+                            <Button type="button" variant="outline" className="flex items-center gap-2">
+                              Upload
+                            </Button>
+                            <p className="text-xs text-gray-500 mt-1">Dimension:- Max-W: 150px, Max-H: 90px</p>
+                          </div>
                         </div>
                         <div>
-                          <Label htmlFor="adminLogo" className="block text-sm font-medium">Upload Admin Logo</Label>
-                          <Input id="adminLogo" type="file" accept="image/*" className="mt-1 block w-full border-gray-300 bg-white px-3 py-2" />
-                          <p className="text-xs text-gray-500 mt-1">Max-width: 100px, Max-height: 110px</p>
+                          <Label htmlFor="adminLogo" className="block text-sm font-medium">Admin Logo</Label>
+                          <div className="mt-1">
+                            <Button type="button" variant="outline" className="flex items-center gap-2">
+                              Upload
+                            </Button>
+                            <p className="text-xs text-gray-500 mt-1">Dimension:- Max-W: 100px, Max-H: 110px</p>
+                          </div>
                         </div>
                       </div>
                     </div>

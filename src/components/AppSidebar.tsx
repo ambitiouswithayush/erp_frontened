@@ -95,8 +95,8 @@ const superAdminMenuItems = [
     title: "Template",
     icon: FileText,
     subItems: [
-      { title: "SMS Templates", url: "/admin/sms" },
-      { title: "Email Templates", url: "/admin/email" },
+      { title: "SMS Template", url: "/admin/sms" },
+      { title: "Email Template", url: "/admin/email" },
     ],
   },
   {

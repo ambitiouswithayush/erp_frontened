@@ -1,7 +1,10 @@
-# TODO: Push Frontend Code to Friend's Repository
+# TODO: Create Manage Class Lecture Dashboard
 
-- [x] Clone the friend's repository (https://github.com/HarshitkGoyal/Student-Management-System.git) into a temporary directory
-- [x] Copy the current frontend code from the current directory to the 'Frontend' subdirectory in the cloned repo
-- [x] Add and commit the changes in the cloned repo
-- [x] Create a new branch named 'blackboxai/frontend-update'
-- [x] Push the new branch to the repository
+- [x] Create ManageClassLecture.tsx component in src/pages/superadmin/
+- [x] Implement List tab with filters, table, and pagination
+- [x] Implement Add tab with form fields
+- [x] Add route to App.tsx for superadmin and staff
+- [x] Create ManageRating.tsx component in src/pages/superadmin/
+- [x] Implement List tab with filters, table, and pagination for ratings
+- [x] Add route to App.tsx for superadmin and staff
+- [ ] Test the new page integration

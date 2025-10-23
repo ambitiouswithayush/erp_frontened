@@ -55,6 +55,8 @@ import ManageUserRole from "./pages/superadmin/ManageUserRole";
 import ManageRolePermission from "./pages/superadmin/ManageRolePermission";
 import ManageSuperAdmin from "./pages/superadmin/ManageSuperAdmin";
 import ManageUser from "./pages/superadmin/ManageUser";
+import ManageClassLecture from "./pages/superadmin/ManageClassLecture";
+import ManageRating from "./pages/superadmin/ManageRating";
 
 const queryClient = new QueryClient();
 
@@ -157,7 +159,7 @@ const App = () => (
             } />
             <Route path="/admin/schools" element={<ProtectedRoute><AppLayout><ManageSchools /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/payment" element={<ProtectedRoute><AppLayout><ManagePaymentSettingPage /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSSettingsPage /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSTemplateSuper /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/email" element={<ProtectedRoute><AppLayout><ManageEmailTemplateSuper /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/academic-year" element={<ProtectedRoute><AppLayout><ManageAcademicYear /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/user-roles" element={<ProtectedRoute><AppLayout><ManageUserRole /></AppLayout></ProtectedRoute>} />
@@ -196,6 +198,16 @@ const App = () => (
             <Route path="/teacher/manage-teacher" element={
               <ProtectedRoute allowedRoles={["staff"]}>
                 <AppLayout><ManageTeacher /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/teacher/class-lecture" element={
+              <ProtectedRoute allowedRoles={["superadmin", "staff"]}>
+                <AppLayout><ManageClassLecture /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/teacher/rating" element={
+              <ProtectedRoute allowedRoles={["superadmin", "staff"]}>
+                <AppLayout><ManageRating /></AppLayout>
               </ProtectedRoute>
             } />
 
