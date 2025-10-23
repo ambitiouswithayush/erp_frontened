@@ -199,7 +199,6 @@ export default function ManageTeacher() {
           {/* List View */}
           {activeTab === 'list' && (
             <div className="mt-6">
-              {/* Table Actions & Search Bar */}
               <div className="bg-white p-4 border-b">
                 <div className="max-w-7xl mx-auto flex items-center justify-between flex-wrap gap-4">
                   {/* Action Buttons */}
