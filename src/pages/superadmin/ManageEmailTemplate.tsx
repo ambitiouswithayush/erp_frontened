@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronDown, ChevronUp, Search, Copy, FileText, FileSpreadsheet, File, Download, Edit, Trash2, Plus } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, Copy, FileText, FileSpreadsheet, File, Download, Edit, Trash2, Plus, List, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -76,7 +76,8 @@ export default function ManageEmailTemplate() {
         <Card className="shadow-lg">
           <CardHeader className="bg-purple-800 text-white flex items-center justify-between">
             <CardTitle className="flex items-center gap-2">
-              ✉️ Manage Email Template
+              <Mail className="h-5 w-5" />
+              Manage Email Template
             </CardTitle>
             <ChevronUp className="h-5 w-5" />
           </CardHeader>
@@ -96,27 +97,23 @@ export default function ManageEmailTemplate() {
               </div>
 
               {/* Tab Navigation */}
-              <div className="flex space-x-1 border-b">
-                <button
+              <div className="px-6 py-4 bg-white flex gap-2">
+                <Button
+                  variant={activeTab === 'list' ? 'default' : 'outline'}
+                  className={`flex items-center gap-2 ${activeTab === 'list' ? 'bg-blue-600 text-white' : 'border-gray-300 text-black'}`}
                   onClick={() => setActiveTab('list')}
-                  className={`px-4 py-2 text-sm font-medium ${
-                    activeTab === 'list'
-                      ? 'border-b-2 border-blue-500 text-blue-600'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
                 >
+                  <List className="h-4 w-4" />
                   List
-                </button>
-                <button
+                </Button>
+                <Button
+                  variant={activeTab === 'add' ? 'default' : 'outline'}
+                  className={`flex items-center gap-2 ${activeTab === 'add' ? 'bg-blue-600 text-white' : 'border-gray-300 text-black'}`}
                   onClick={() => setActiveTab('add')}
-                  className={`px-4 py-2 text-sm font-medium ${
-                    activeTab === 'add'
-                      ? 'border-b-2 border-blue-500 text-blue-600'
-                      : 'text-gray-500 hover:text-gray-700'
-                  }`}
                 >
+                  <Plus className="h-4 w-4" />
                   Add
-                </button>
+                </Button>
               </div>
 
               {/* Tab Content */}

@@ -13,7 +13,7 @@ interface FilterBarProps {
 
 export function FilterBar({ onSchoolChange, onSessionChange, onYearChange, onSearch, onUpdate }: FilterBarProps) {
   return (
-    <div className="w-full bg-white border-b p-4 flex flex-wrap items-center gap-4">
+    <div className="w-full bg-gray-800 p-4 flex flex-wrap items-center gap-4">
       <Select onValueChange={onSchoolChange}>
         <SelectTrigger className="w-[200px]">
           <SelectValue placeholder="--Select School--" />

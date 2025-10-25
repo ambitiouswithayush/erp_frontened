@@ -41,6 +41,7 @@ import ManagePostalDispatch from "./pages/superadmin/ManagePostalDispatch";
 import ManagePostalReceive from "./pages/superadmin/ManagePostalReceive";
 import ManageSchoolsSuper from "./pages/superadmin/ManageSchools";
 import ManageSMSSettingsPage from "./pages/superadmin/ManageSMSSettingsPage";
+import ManageEmailSettingsPage from "./pages/superadmin/ManageEmailSettingsPage";
 import ManageSMSTemplateSuper from "./pages/superadmin/ManageSMSTemplate";
 import ManageUserCredential from "./pages/superadmin/ManageUserCredential";
 import ManageVisitorInfo from "./pages/superadmin/ManageVisitorInfo";
@@ -57,6 +58,11 @@ import ManageSuperAdmin from "./pages/superadmin/ManageSuperAdmin";
 import ManageUser from "./pages/superadmin/ManageUser";
 import ManageClassLecture from "./pages/superadmin/ManageClassLecture";
 import ManageRating from "./pages/superadmin/ManageRating";
+import ManageLeaveType from "./pages/superadmin/ManageLeaveType";
+import ManageLeaveApplication from "./pages/superadmin/ManageLeaveApplication";
+import ManageWaitingApplication from "./pages/superadmin/ManageWaitingApplication";
+import ManageApprovedApplication from "./pages/superadmin/ManageApprovedApplication";
+import ManageDeclinedApplication from "./pages/superadmin/ManageDeclinedApplication";
 
 const queryClient = new QueryClient();
 
@@ -159,8 +165,8 @@ const App = () => (
             } />
             <Route path="/admin/schools" element={<ProtectedRoute><AppLayout><ManageSchools /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/payment" element={<ProtectedRoute><AppLayout><ManagePaymentSettingPage /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSTemplateSuper /></AppLayout></ProtectedRoute>} />
-            <Route path="/admin/email" element={<ProtectedRoute><AppLayout><ManageEmailTemplateSuper /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/sms" element={<ProtectedRoute><AppLayout><ManageSMSSettingsPage /></AppLayout></ProtectedRoute>} />
+            <Route path="/admin/email" element={<ProtectedRoute><AppLayout><ManageEmailSettingsPage /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/academic-year" element={<ProtectedRoute><AppLayout><ManageAcademicYear /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/user-roles" element={<ProtectedRoute><AppLayout><ManageUserRole /></AppLayout></ProtectedRoute>} />
             <Route path="/admin/permissions" element={<ProtectedRoute><AppLayout><ManageRolePermission /></AppLayout></ProtectedRoute>} />
@@ -211,7 +217,9 @@ const App = () => (
               </ProtectedRoute>
             } />
 
-            {/* Other Routes - All Coming Soon */}
+            {/* Template Routes */}
+            <Route path="/template/sms" element={<ProtectedRoute><AppLayout><ManageSMSTemplateSuper /></AppLayout></ProtectedRoute>} />
+            <Route path="/template/email" element={<ProtectedRoute><AppLayout><ManageEmailTemplateSuper /></AppLayout></ProtectedRoute>} />
             <Route path="/template/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Template Management" /></AppLayout></ProtectedRoute>} />
             {/* Front Office Routes */}
             <Route path="/front-office/visitor-info" element={<ProtectedRoute><AppLayout><ManageVisitorInfo /></AppLayout></ProtectedRoute>} />
@@ -222,6 +230,11 @@ const App = () => (
             <Route path="/front-office/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Front Office" /></AppLayout></ProtectedRoute>} />
             <Route path="/hr/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Human Resource" /></AppLayout></ProtectedRoute>} />
             <Route path="/teacher/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Teacher Management" /></AppLayout></ProtectedRoute>} />
+            <Route path="/leaves/type" element={<ProtectedRoute><AppLayout><ManageLeaveType /></AppLayout></ProtectedRoute>} />
+            <Route path="/leaves/application" element={<ProtectedRoute><AppLayout><ManageLeaveApplication /></AppLayout></ProtectedRoute>} />
+            <Route path="/leaves/waiting" element={<ProtectedRoute><AppLayout><ManageWaitingApplication /></AppLayout></ProtectedRoute>} />
+            <Route path="/leaves/approved" element={<ProtectedRoute><AppLayout><ManageApprovedApplication /></AppLayout></ProtectedRoute>} />
+            <Route path="/leaves/declined" element={<ProtectedRoute><AppLayout><ManageDeclinedApplication /></AppLayout></ProtectedRoute>} />
             <Route path="/leaves/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Leave Management" /></AppLayout></ProtectedRoute>} />
             <Route path="/academic/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Academic Management" /></AppLayout></ProtectedRoute>} />
             <Route path="/lesson-plan/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Lesson Plan" /></AppLayout></ProtectedRoute>} />
