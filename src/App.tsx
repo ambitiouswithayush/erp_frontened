@@ -5,15 +5,21 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { AppSidebar } from "@/components/AppSidebar";
 import { AuthProvider, useAuth } from "@/hooks/useAuth";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { LogOut, Bell, MessageSquare, User, Settings } from "lucide-react";
+import { Bell, MessageSquare, User, LogOut, KeyRound, UserCircle, ChevronDown } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import AdminDashboard from "./pages/AdminDashboard";
-import StaffDashboard from "./pages/StaffDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import Theme from "./pages/Theme";
 import Language from "./pages/Language";
@@ -23,7 +29,10 @@ import AcademicYear from "./pages/teacher/AcademicYear";
 import ManageDesignation from "./pages/teacher/ManageDesignation";
 import ManageEmployee from "./pages/teacher/ManageEmployee";
 import ManageDepartment from "./pages/teacher/ManageDepartment";
+import SuperadminManageDepartment from "./pages/superadmin/ManageDepartment";
 import ManageTeacher from "./pages/teacher/ManageTeacher";
+import SuperadminManageTeacher from "./pages/superadmin/ManageTeacher";
+import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import GeneralSettings from "./pages/GeneralSettings";
 import ManageSchools from "./pages/ManageSchools";
 import ManageSMSTemplate from "./pages/ManageSMSTemplate";
@@ -63,6 +72,8 @@ import ManageLeaveApplication from "./pages/superadmin/ManageLeaveApplication";
 import ManageWaitingApplication from "./pages/superadmin/ManageWaitingApplication";
 import ManageApprovedApplication from "./pages/superadmin/ManageApprovedApplication";
 import ManageDeclinedApplication from "./pages/superadmin/ManageDeclinedApplication";
+import ManageClass from "./pages/superadmin/ManageClass";
+import ManageSection from "./pages/superadmin/ManageSection";
 
 const queryClient = new QueryClient();
 
@@ -75,6 +86,14 @@ function AppLayout({ children }: { children: React.ReactNode }) {
     navigate("/login");
   };
 
+  const handleProfile = () => {
+    navigate("/teacher/profile/my-profile");
+  };
+
+  const handleResetPassword = () => {
+    navigate("/teacher/profile/reset-password");
+  };
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
@@ -84,24 +103,42 @@ function AppLayout({ children }: { children: React.ReactNode }) {
             <SidebarTrigger className="text-[#f0f0f0]" />
             <h1 className="text-lg font-semibold text-[#f0f0f0]">EduManage Pro</h1>
             <div className="ml-auto flex items-center gap-3">
-              <Avatar className="h-8 w-8">
-                <AvatarImage src="/placeholder.svg" alt="Teacher" />
-                <AvatarFallback className="bg-[#61D02E] text-white">T</AvatarFallback>
-              </Avatar>
-              <span className="text-sm text-[#f0f0f0] capitalize">{user}</span>
               <Button variant="ghost" size="sm" className="text-[#f0f0f0] hover:bg-gray-700">
                 <Bell className="h-4 w-4" />
               </Button>
               <Button variant="ghost" size="sm" className="text-[#f0f0f0] hover:bg-gray-700">
                 <MessageSquare className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-[#f0f0f0] hover:bg-gray-700">
-                <User className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleLogout} className="bg-gray-700 border-gray-500 text-[#f0f0f0] hover:bg-gray-600">
-                <LogOut className="h-4 w-4 mr-2" />
-                Logout
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2 text-[#f0f0f0] hover:bg-gray-700">
+                    <Avatar className="h-8 w-8 bg-white">
+                      <AvatarFallback className="bg-white">
+                        <User className="h-5 w-5 text-purple-600" />
+                      </AvatarFallback>
+                    </Avatar>
+                    <span className="text-sm capitalize">
+                      {user === "staff" ? "Teacher" : user}
+                    </span>
+                    <ChevronDown className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem onClick={handleProfile} className="cursor-pointer">
+                    <UserCircle className="h-4 w-4 mr-2" />
+                    Profile
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={handleResetPassword} className="cursor-pointer">
+                    <KeyRound className="h-4 w-4 mr-2" />
+                    Reset Password
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-red-600">
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </header>
           <main className="flex-1 p-6 overflow-auto bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
@@ -137,7 +174,7 @@ const App = () => (
             } />
             <Route path="/dashboard/staff" element={
               <ProtectedRoute allowedRoles={["staff"]}>
-                <AppLayout><StaffDashboard /></AppLayout>
+                <AppLayout><TeacherDashboard /></AppLayout>
               </ProtectedRoute>
             } />
             <Route path="/dashboard/student" element={
@@ -181,6 +218,11 @@ const App = () => (
             <Route path="/admin/opening-hours" element={<ProtectedRoute><AppLayout><ManageOpeningHour /></AppLayout></ProtectedRoute>} />
 
             {/* Teacher Portal Routes */}
+            <Route path="/teacher/dashboard" element={
+              <ProtectedRoute allowedRoles={["staff"]}>
+                <AppLayout><TeacherDashboard /></AppLayout>
+              </ProtectedRoute>
+            } />
             <Route path="/teacher/admin/academic-year" element={
               <ProtectedRoute allowedRoles={["staff"]}>
                 <AppLayout><AcademicYear /></AppLayout>
@@ -194,6 +236,16 @@ const App = () => (
             <Route path="/teacher/hr/employee" element={
               <ProtectedRoute allowedRoles={["superadmin", "staff"]}>
                 <AppLayout><ManageEmployee /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/superadmin/department" element={
+              <ProtectedRoute allowedRoles={["superadmin"]}>
+                <AppLayout><SuperadminManageDepartment /></AppLayout>
+              </ProtectedRoute>
+            } />
+            <Route path="/superadmin/manage-teacher" element={
+              <ProtectedRoute allowedRoles={["superadmin"]}>
+                <AppLayout><SuperadminManageTeacher /></AppLayout>
               </ProtectedRoute>
             } />
             <Route path="/teacher/department" element={
@@ -236,6 +288,8 @@ const App = () => (
             <Route path="/leaves/approved" element={<ProtectedRoute><AppLayout><ManageApprovedApplication /></AppLayout></ProtectedRoute>} />
             <Route path="/leaves/declined" element={<ProtectedRoute><AppLayout><ManageDeclinedApplication /></AppLayout></ProtectedRoute>} />
             <Route path="/leaves/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Leave Management" /></AppLayout></ProtectedRoute>} />
+            <Route path="/academic/class" element={<ProtectedRoute><AppLayout><ManageClass /></AppLayout></ProtectedRoute>} />
+            <Route path="/academic/section" element={<ProtectedRoute><AppLayout><ManageSection /></AppLayout></ProtectedRoute>} />
             <Route path="/academic/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Academic Management" /></AppLayout></ProtectedRoute>} />
             <Route path="/lesson-plan/*" element={<ProtectedRoute><AppLayout><ComingSoon title="Lesson Plan" /></AppLayout></ProtectedRoute>} />
             <Route path="/class-routine" element={<ProtectedRoute><AppLayout><ComingSoon title="Class Routine" /></AppLayout></ProtectedRoute>} />

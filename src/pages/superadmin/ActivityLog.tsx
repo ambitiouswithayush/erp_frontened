@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronUp, FileText, List, Menu, Search, FileText as FileIcon, Download, Copy, Edit, Eye, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -109,39 +110,39 @@ export default function ActivityLog() {
               <div className="px-6 py-4 bg-gray-50">
                 <div className="flex items-center flex-wrap gap-2 text-sm">
                   <span className="font-medium mr-2">Quick Link:</span>
-                  <a href="#" className="text-blue-600 hover:underline">General Setting</a>
+                  <Link to="/admin/general" className="text-blue-600 hover:underline">General Setting</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Manage School</a>
+                  <Link to="/admin/schools" className="text-blue-600 hover:underline">Manage School</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Payment Setting</a>
+                  <Link to="/admin/payment" className="text-blue-600 hover:underline">Payment Setting</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">SMS Setting</a>
+                  <Link to="/admin/sms" className="text-blue-600 hover:underline">SMS Setting</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Email Setting</a>
+                  <Link to="/admin/email" className="text-blue-600 hover:underline">Email Setting</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Academic Year</a>
+                  <Link to="/admin/academic-year" className="text-blue-600 hover:underline">Academic Year</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">User Role</a>
+                  <Link to="/admin/user-roles" className="text-blue-600 hover:underline">User Role</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Role Permission</a>
+                  <Link to="/admin/permissions" className="text-blue-600 hover:underline">Role Permission</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Super Admin</a>
+                  <Link to="/admin/super-admin" className="text-blue-600 hover:underline">Super Admin</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Manage User</a>
+                  <Link to="/admin/users" className="text-blue-600 hover:underline">Manage User</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Reset User Password</a>
+                  <Link to="/admin/reset-password" className="text-blue-600 hover:underline">Reset User Password</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Reset Username</a>
+                  <Link to="/admin/reset-username" className="text-blue-600 hover:underline">Reset Username</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">User Credential</a>
+                  <Link to="/admin/credentials" className="text-blue-600 hover:underline">User Credential</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Activity Log</a>
+                  <Link to="/admin/activity-logs" className="text-blue-600 hover:underline">Activity Log</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Feedback</a>
+                  <Link to="/admin/feedbacks" className="text-blue-600 hover:underline">Feedback</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Backup</a>
+                  <Link to="/admin/backup" className="text-blue-600 hover:underline">Backup</Link>
                   <span>|</span>
-                  <a href="#" className="text-blue-600 hover:underline">Opening Hour</a>
+                  <Link to="/admin/opening-hours" className="text-blue-600 hover:underline">Opening Hour</Link>
                 </div>
               </div>
 

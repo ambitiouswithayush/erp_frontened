@@ -1,10 +1,9 @@
-# TODO: Create Manage Class Lecture Dashboard
+# TODO: Add Photo Column to Manage Teacher Table
 
-- [x] Create ManageClassLecture.tsx component in src/pages/superadmin/
-- [x] Implement List tab with filters, table, and pagination
-- [x] Implement Add tab with form fields
-- [x] Add route to App.tsx for superadmin and staff
-- [x] Create ManageRating.tsx component in src/pages/superadmin/
-- [x] Implement List tab with filters, table, and pagination for ratings
-- [x] Add route to App.tsx for superadmin and staff
-- [ ] Test the new page integration
+## Tasks
+- [ ] Update Teacher interface to include photo field
+- [ ] Add Photo column header after Name in table
+- [ ] Add photo display cell in table body with img tag
+- [ ] Modify handleFormSubmit to add teachers to state with photo URL
+- [ ] Map form data to Teacher object (combine firstName + lastName, generate sl, etc.)
+- [ ] Test the add functionality and photo display

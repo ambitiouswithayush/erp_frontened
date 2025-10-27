@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronUp, Settings, SquarePlus, Copy, FileText, Download, Search, Eye, Edit, Trash2, ChevronLeft, ChevronRight, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -63,39 +64,39 @@ export default function ManageAcademicYear() {
             <div className="flex items-center flex-wrap">
               <span className="text-sm font-medium mr-4">Quick Link:</span>
               <div className="flex items-center space-x-2 text-blue-600 text-sm flex-wrap">
-                <a href="#" className="hover:underline">General Setting</a>
+                <Link to="/admin/general" className="hover:underline">General Setting</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Manage School</a>
+                <Link to="/admin/schools" className="hover:underline">Manage School</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Payment Setting</a>
+                <Link to="/admin/payment" className="hover:underline">Payment Setting</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">SMS Setting</a>
+                <Link to="/admin/sms" className="hover:underline">SMS Setting</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Email Setting</a>
+                <Link to="/admin/email" className="hover:underline">Email Setting</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline font-semibold text-blue-800">Academic Year</a>
+                <Link to="/admin/academic-year" className="hover:underline font-semibold text-blue-800">Academic Year</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">User Role</a>
+                <Link to="/admin/user-roles" className="hover:underline">User Role</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Permission</a>
+                <Link to="/admin/permissions" className="hover:underline">Permission</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Super Admin</a>
+                <Link to="/admin/super-admin" className="hover:underline">Super Admin</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Manage User</a>
+                <Link to="/admin/users" className="hover:underline">Manage User</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Reset User Password</a>
+                <Link to="/admin/reset-password" className="hover:underline">Reset User Password</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Reset Username</a>
+                <Link to="/admin/reset-username" className="hover:underline">Reset Username</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">User Credential</a>
+                <Link to="/admin/credentials" className="hover:underline">User Credential</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Activity Log</a>
+                <Link to="/admin/activity-logs" className="hover:underline">Activity Log</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Feedback</a>
+                <Link to="/admin/feedbacks" className="hover:underline">Feedback</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Backup</a>
+                <Link to="/admin/backup" className="hover:underline">Backup</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Opening Hour</a>
+                <Link to="/admin/opening-hours" className="hover:underline">Opening Hour</Link>
               </div>
             </div>
           </div>

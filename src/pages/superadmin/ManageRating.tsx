@@ -9,13 +9,59 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function ManageRating() {
   const [selectedRows, setSelectedRows] = useState("15");
+  const [selectedSchool, setSelectedSchool] = useState("");
+  const [selectedSessionYear, setSelectedSessionYear] = useState("");
+  const [globalSearch, setGlobalSearch] = useState("");
 
   const ratings = [
     // Sample data - will be empty initially
   ];
 
   return (
-    <div className="w-full min-h-screen bg-gray-900 bg-opacity-50" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.1"%3E%3Ccircle cx="30" cy="30" r="4"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")' }}>
+    <div className="w-full min-h-screen bg-white">
+      {/* Header Area */}
+      <div className="bg-white p-4 border-b">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
+            <div className="flex items-center gap-4 flex-wrap">
+              <Select value={selectedSchool} onValueChange={setSelectedSchool}>
+                <SelectTrigger className="w-64">
+                  <SelectValue placeholder="Select School" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="school1">Delhi International Public School</SelectItem>
+                  <SelectItem value="school2">शासकीय क्वालिस</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={selectedSessionYear} onValueChange={setSelectedSessionYear}>
+                <SelectTrigger className="w-48">
+                  <SelectValue placeholder="Session Year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="2023-2024">2023-2024</SelectItem>
+                  <SelectItem value="2024-2025">2024-2025</SelectItem>
+                  <SelectItem value="2025-2026">2025-2026</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="Global Search"
+                  className="pl-10 w-64"
+                  value={globalSearch}
+                  onChange={(e) => setGlobalSearch(e.target.value)}
+                />
+              </div>
+              <Button className="bg-black text-white hover:bg-gray-800">
+                Update
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <Card className="max-w-6xl mx-auto my-8 shadow-lg bg-white">
         <CardHeader className="bg-purple-800 text-white flex items-center justify-between">
           <CardTitle className="flex items-center gap-2">
@@ -50,28 +96,6 @@ export default function ManageRating() {
               <List className="h-4 w-4" />
               List
             </Button>
-          </div>
-
-          {/* Sub-filters */}
-          <div className="px-6 py-4 bg-white flex items-center gap-4 flex-wrap">
-            <Select>
-              <SelectTrigger className="w-48 bg-gray-100">
-                <SelectValue placeholder="--Select School--" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="school1">School 1</SelectItem>
-                <SelectItem value="school2">School 2</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select>
-              <SelectTrigger className="w-48 bg-gray-100">
-                <SelectValue placeholder="--Select--" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="option1">Option 1</SelectItem>
-                <SelectItem value="option2">Option 2</SelectItem>
-              </SelectContent>
-            </Select>
           </div>
 
           {/* Action Buttons */}

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ChevronUp, User, List, SquarePlus, Copy, FileText, Download, Search, Edit, Trash2, ChevronLeft, ChevronRight, Filter, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -162,9 +163,9 @@ export default function ManageDesignation() {
             <div className="flex items-center flex-wrap">
               <span className="text-sm font-medium mr-4">Quick Link:</span>
               <div className="flex items-center space-x-2 text-blue-600 text-sm flex-wrap">
-                <span className="font-semibold">Manage Designation</span>
+                <Link to="/teacher/designation" className="font-semibold hover:underline">Manage Designation</Link>
                 <span>|</span>
-                <a href="#" className="hover:underline">Manage Employee</a>
+                <Link to="/teacher/employee" className="hover:underline">Manage Employee</Link>
               </div>
             </div>
           </div>

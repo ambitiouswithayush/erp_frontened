@@ -95,8 +95,8 @@ const superAdminMenuItems = [
     title: "Template",
     icon: FileText,
     subItems: [
-      { title: "SMS Template", url: "/admin/sms" },
-      { title: "Email Template", url: "/admin/email" },
+      { title: "SMS Template", url: "/template/sms" },
+      { title: "Email Template", url: "/template/email" },
     ],
   },
   {
@@ -121,8 +121,8 @@ const superAdminMenuItems = [
     title: "Teacher",
     icon: GraduationCap,
     subItems: [
-      { title: "Department", url: "/teacher/department" },
-      { title: "Manage Teacher", url: "/teacher/manage-teacher" },
+      { title: "Department", url: "/superadmin/department" },
+      { title: "Manage Teacher", url: "/superadmin/manage-teacher" },
       { title: "Class Lecture", url: "/teacher/class-lecture" },
       { title: "Rating", url: "/teacher/rating" },
     ],
